@@ -16,6 +16,8 @@ import {
 import React, { useState } from "react";
 // import { useAuth } from "../helpers/AuthProvider";
 
+import Link from "next/link";
+
 //material icons
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import HomeIcon from "@mui/icons-material/Home";
@@ -24,7 +26,7 @@ import RouteIcon from "@mui/icons-material/Route";
 import FactCheckIcon from "@mui/icons-material/FactCheck";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ExpandLessIcon from "@mui/icons-material/ExpandLess";
-import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
+import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord";
 
 export const MyDrawer = ({ open, toggleDrawer }) => {
   // const { authData } = useAuth();
@@ -54,12 +56,12 @@ export const MyDrawer = ({ open, toggleDrawer }) => {
         {
           key: 0,
           name: "Regulares",
-          route: "/rutas/regulares",
+          route: "/inscripciones/regulares",
         },
         {
           key: 1,
           name: "Priorizadas",
-          route: "/rutas/priorizadas",
+          route: "/inscripciones/priorizadas",
         },
       ],
     },
@@ -83,7 +85,7 @@ export const MyDrawer = ({ open, toggleDrawer }) => {
       onClose={toggleDrawer(false)}
       PaperProps={{
         sx: {
-          borderRadius: "0 20px 20px 0",
+          borderRadius: "0 8px 8px 0",
           bgcolor: theme.palette.background.paper,
           boxShadow: theme.shadows[4],
           color: theme.palette.text.primary,
@@ -132,7 +134,6 @@ export const MyDrawer = ({ open, toggleDrawer }) => {
         <List sx={{ width: "100%", bgcolor: theme.palette.background.paper }}>
           {options.map((option) => (
             <React.Fragment key={option.key}>
-              {/* 📌 Opción con SubItems (Desplegable) */}
               {option.subItems ? (
                 <>
                   <ListItemButton onClick={() => handleToggle(option.key)}>
@@ -152,32 +153,35 @@ export const MyDrawer = ({ open, toggleDrawer }) => {
                   >
                     <List component="div">
                       {option.subItems.map((subItem) => (
-                        <ListItemButton
-                          key={subItem.key}
-                          href={subItem.route}
-                          sx={{ pl: 6 }}
-                          onClick={toggleDrawer(false)}
-                        >
-                          <ListItemIcon sx={{ minWidth: 20 }}>
-                            <FiberManualRecordIcon
-                              sx={{ fontSize: 8, color: "gray" }}
-                            />
-                          </ListItemIcon>
-                          <ListItemText primary={subItem.name} />
-                        </ListItemButton>
+                        <Link href={subItem.route}>
+                          <ListItemButton
+                            key={subItem.key}
+                            // href={subItem.route}
+                            sx={{ pl: 6 }}
+                            onClick={toggleDrawer(false)}
+                          >
+                            <ListItemIcon sx={{ minWidth: 20 }}>
+                              <FiberManualRecordIcon
+                                sx={{ fontSize: 8, color: "gray" }}
+                              />
+                            </ListItemIcon>
+                            <ListItemText primary={subItem.name} />
+                          </ListItemButton>
+                        </Link>
                       ))}
                     </List>
                   </Collapse>
                 </>
               ) : (
-                /* 📌 Opción Normal */
-                <ListItemButton
-                  href={option.route}
-                  onClick={toggleDrawer(false)}
-                >
-                  <ListItemIcon>{option.icon}</ListItemIcon>
-                  <ListItemText primary={option.name} />
-                </ListItemButton>
+                <Link href={option.route}>
+                  <ListItemButton
+                    // href={option.route}
+                    onClick={toggleDrawer(false)}
+                  >
+                    <ListItemIcon>{option.icon}</ListItemIcon>
+                    <ListItemText primary={option.name} />
+                  </ListItemButton>
+                </Link>
               )}
             </React.Fragment>
           ))}
