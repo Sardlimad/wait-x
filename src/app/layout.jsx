@@ -16,7 +16,7 @@ export const MainLayout = ({ children }) => {
   const pathname = usePathname(); // Obtiene la URL actual
 
   // Si estamos en la página de login, no usamos el layout
-  if (pathname === "/login") {
+  if (pathname.includes("/auth")) {
     return <>{children}</>;
   }
 
