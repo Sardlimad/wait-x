@@ -27,6 +27,7 @@ import FactCheckIcon from "@mui/icons-material/FactCheck";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord";
+import PlaceIcon from '@mui/icons-material/Place';
 
 export const MyDrawer = ({ open, toggleDrawer }) => {
   // const { authData } = useAuth();
@@ -76,6 +77,12 @@ export const MyDrawer = ({ open, toggleDrawer }) => {
       name: "Rutas",
       route: "/rutas",
       icon: <RouteIcon sx={{ color: theme.palette.primary.main }} />,
+    },
+    {
+      key: 4,
+      name: "Localidades",
+      route: "/localidades",
+      icon: <PlaceIcon sx={{ color: theme.palette.primary.main }} />,
     },
   ];
 
@@ -153,7 +160,7 @@ export const MyDrawer = ({ open, toggleDrawer }) => {
                   >
                     <List component="div">
                       {option.subItems.map((subItem) => (
-                        <Link href={subItem.route}>
+                        <Link key={subItem.key} href={subItem.route}>
                           <ListItemButton
                             key={subItem.key}
                             // href={subItem.route}
