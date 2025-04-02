@@ -28,6 +28,7 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord";
 import PlaceIcon from '@mui/icons-material/Place';
+import AssignmentLateIcon from '@mui/icons-material/AssignmentLate';
 
 export const MyDrawer = ({ open, toggleDrawer }) => {
   // const { authData } = useAuth();
@@ -83,6 +84,12 @@ export const MyDrawer = ({ open, toggleDrawer }) => {
       name: "Localidades",
       route: "/localidades",
       icon: <PlaceIcon sx={{ color: theme.palette.primary.main }} />,
+    },
+    {
+      key: 5,
+      name: "Fallos",
+      route: "/fallos",
+      icon: <AssignmentLateIcon sx={{ color: theme.palette.primary.main }} />,
     },
   ];
 

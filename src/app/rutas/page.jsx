@@ -1,8 +1,8 @@
 import React from "react";
-import ListView from "../../components/ListView";
+import RutasView from "../../components/views/RutasView";
 
-export const Rutas = () => {
-  return <ListView title={"Consulta de rutas"}/>;
+export const InsRegulares = () => {
+  return <RutasView />;
 };
 
-export default Rutas;
+export default InsRegulares;
