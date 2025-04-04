@@ -17,6 +17,8 @@ import React, { useState } from "react";
 // import { useAuth } from "../helpers/AuthProvider";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useLoading } from "../../app/layout";
 
 //material icons
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
@@ -33,6 +35,8 @@ import AssignmentLateIcon from '@mui/icons-material/AssignmentLate';
 export const MyDrawer = ({ open, toggleDrawer }) => {
   // const { authData } = useAuth();
   const theme = useTheme();
+  const router = useRouter();
+  const { setIsLoading } = useLoading();
   const [openMenus, setOpenMenus] = useState({});
 
   const handleToggle = (key) => {
@@ -40,6 +44,12 @@ export const MyDrawer = ({ open, toggleDrawer }) => {
       ...prev,
       [key]: !prev[key],
     }));
+  };
+
+  const handleNavigation = (route) => {
+    setIsLoading(true);
+    toggleDrawer(false)();
+    router.push(route);
   };
 
   const options = [
@@ -167,35 +177,29 @@ export const MyDrawer = ({ open, toggleDrawer }) => {
                   >
                     <List component="div">
                       {option.subItems.map((subItem) => (
-                        <Link key={subItem.key} href={subItem.route}>
-                          <ListItemButton
-                            key={subItem.key}
-                            // href={subItem.route}
-                            sx={{ pl: 6 }}
-                            onClick={toggleDrawer(false)}
-                          >
-                            <ListItemIcon sx={{ minWidth: 20 }}>
-                              <FiberManualRecordIcon
-                                sx={{ fontSize: 8, color: "gray" }}
-                              />
-                            </ListItemIcon>
-                            <ListItemText primary={subItem.name} />
-                          </ListItemButton>
-                        </Link>
+                        <ListItemButton
+                          key={subItem.key}
+                          sx={{ pl: 6 }}
+                          onClick={() => handleNavigation(subItem.route)}
+                        >
+                          <ListItemIcon sx={{ minWidth: 20 }}>
+                            <FiberManualRecordIcon
+                              sx={{ fontSize: 8, color: "gray" }}
+                            />
+                          </ListItemIcon>
+                          <ListItemText primary={subItem.name} />
+                        </ListItemButton>
                       ))}
                     </List>
                   </Collapse>
                 </>
               ) : (
-                <Link href={option.route}>
-                  <ListItemButton
-                    // href={option.route}
-                    onClick={toggleDrawer(false)}
-                  >
-                    <ListItemIcon>{option.icon}</ListItemIcon>
-                    <ListItemText primary={option.name} />
-                  </ListItemButton>
-                </Link>
+                <ListItemButton
+                  onClick={() => handleNavigation(option.route)}
+                >
+                  <ListItemIcon>{option.icon}</ListItemIcon>
+                  <ListItemText primary={option.name} />
+                </ListItemButton>
               )}
             </React.Fragment>
           ))}

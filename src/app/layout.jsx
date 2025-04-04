@@ -1,7 +1,7 @@
 "use client";
-import { Box, CircularProgress } from "@mui/material";
-import React, { useEffect } from "react";
-import { usePathname, useRouter } from "next/navigation";
+import { Box, CircularProgress, Backdrop } from "@mui/material";
+import React, { useEffect, useState, createContext, useContext } from "react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useAuth } from "../hooks/useAuth";
 
 //styles
@@ -13,13 +13,49 @@ import transportTheme from "../themes/transport_theme";
 //material ui components
 import NavBar from "../components/custom/NavBar";
 
+// Loading Context
+const LoadingContext = createContext({
+  isLoading: false,
+  setIsLoading: () => {}
+});
+
+export const useLoading = () => useContext(LoadingContext);
+
+// Loading Provider Component
+const LoadingProvider = ({ children }) => {
+  const [isLoading, setIsLoading] = useState(false);
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+
+  // Reset loading state on route change
+  useEffect(() => {
+    setIsLoading(false);
+  }, [pathname, searchParams]);
+
+  return (
+    <LoadingContext.Provider value={{ isLoading, setIsLoading }}>
+      {children}
+      <Backdrop
+        sx={{
+          color: '#fff',
+          zIndex: (theme) => theme.zIndex.drawer + 2,
+          backgroundColor: 'rgba(0, 0, 0, 0.5)',
+        }}
+        open={isLoading}
+      >
+        <CircularProgress color="primary" />
+      </Backdrop>
+    </LoadingContext.Provider>
+  );
+};
+
 export const MainLayout = ({ children }) => {
   const pathname = usePathname();
   const router = useRouter();
-  const { isAuthenticated, isLoading } = useAuth();
+  const { isAuthenticated, isLoading: authLoading } = useAuth();
 
   useEffect(() => {
-    if (!isLoading) {
+    if (!authLoading) {
       const isAuthPath = pathname.startsWith('/auth');
       const isPublicPath = pathname === '/' || pathname === '/dashboard';
 
@@ -29,14 +65,14 @@ export const MainLayout = ({ children }) => {
         router.push('/dashboard');
       }
     }
-  }, [isAuthenticated, isLoading, pathname, router]);
+  }, [isAuthenticated, authLoading, pathname, router]);
 
   // Si estamos en la página de login, no usamos el layout
   if (pathname.includes("/auth")) {
     return <>{children}</>;
   }
 
-  if (isLoading) {
+  if (authLoading) {
     return (
       <html lang="es">
         <body>
@@ -63,12 +99,14 @@ export const MainLayout = ({ children }) => {
       <body>
         <ThemeProvider theme={transportTheme}>
           <CssBaseline />
-          <Box>
-            <NavBar />
+          <LoadingProvider>
             <Box>
-              {children}
+              <NavBar />
+              <Box>
+                {children}
+              </Box>
             </Box>
-          </Box>
+          </LoadingProvider>
         </ThemeProvider>
       </body>
     </html>
