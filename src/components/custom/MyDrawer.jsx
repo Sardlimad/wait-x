@@ -89,12 +89,12 @@ export const MyDrawer = ({ open, toggleDrawer }) => {
       route: "/rutas",
       icon: <RouteIcon sx={{ color: theme.palette.primary.main }} />,
     },
-    {
-      key: 4,
-      name: "Localidades",
-      route: "/localidades",
-      icon: <PlaceIcon sx={{ color: theme.palette.primary.main }} />,
-    },
+    // {
+    //   key: 4,
+    //   name: "Localidades",
+    //   route: "/localidades",
+    //   icon: <PlaceIcon sx={{ color: theme.palette.primary.main }} />,
+    // },
     {
       key: 5,
       name: "Fallos",
