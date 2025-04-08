@@ -1,9 +1,8 @@
 import React from "react";
-import ListView from "../../../components/ListView";
-import { TextField } from "@mui/material";
+import InscripcionesRegularesView from "../../../components/views/InscripcionesRegularesView";
 
-export const InsRegulares = () => {
-  return <ListView title={"Consulta de inscripciones regulares"} ResultTable={TextField}/>;
+export const InsPriorizadas = () => {
+  return <InscripcionesRegularesView />;
 };
 
-export default InsRegulares;
+export default InsPriorizadas;

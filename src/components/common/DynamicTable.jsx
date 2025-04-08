@@ -34,7 +34,7 @@ const DynamicTable = ({
   ...restProps // Resto de props que podrían ser pasadas
 }) => {
   const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
   const [orderBy, setOrderBy] = useState('');
   const [order, setOrder] = useState('asc');
   const [internalSearchTerm, setInternalSearchTerm] = useState(searchTerm);

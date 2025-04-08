@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import {
   Box,
   Button,
@@ -17,6 +17,7 @@ import Link from "next/link";
 
 export const ListView = ({ title, children }) => {
   const pathname = usePathname();
+  const router = useRouter();
   const [searchTerm, setSearchTerm] = useState("");
 
   // Clonar los children y pasar searchTerm como prop sólo a componentes React, no a elementos DOM
@@ -82,7 +83,7 @@ export const ListView = ({ title, children }) => {
             variant="outlined"
             color="secondary"
             startIcon={<KeyboardReturnIcon />}
-            href="/"
+            onClick={() => router.back()}
           >
             Regresar
           </Button>

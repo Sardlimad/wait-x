@@ -12,12 +12,14 @@ import {
   IconButton,
   Tooltip,
 } from "@mui/material";
-import QRScannerModal from '../common/QRScannerModal';
+import QRScannerModal from "../common/QRScannerModal";
 import SaveIcon from "@mui/icons-material/Save";
 import KeyboardReturnIcon from "@mui/icons-material/KeyboardReturn";
 import QrCodeScannerIcon from "@mui/icons-material/QrCodeScanner";
+import { useRouter } from "next/navigation";
 
 const ClienteForm = ({ onSubmit, initialData = null, isEditing = false }) => {
+  const router = useRouter();
   const [formData, setFormData] = useState({
     ci: "",
     nombre: "",
@@ -43,12 +45,12 @@ const ClienteForm = ({ onSubmit, initialData = null, isEditing = false }) => {
 
   const handleQRScan = (data) => {
     if (data) {
-      setFormData(prev => {
+      setFormData((prev) => {
         const newData = {
           ...prev,
           ci: data.ci || prev.ci,
           nombre: data.nombre || prev.nombre,
-          apellidos: data.apellidos || prev.apellidos
+          apellidos: data.apellidos || prev.apellidos,
         };
         return newData;
       });
@@ -72,25 +74,36 @@ const ClienteForm = ({ onSubmit, initialData = null, isEditing = false }) => {
   };
 
   return (
-    <Paper 
+    <Paper
       elevation={3}
-      sx={{ 
+      sx={{
         p: 4,
-        width: '100%',
+        width: "100%",
         borderRadius: 2,
       }}
     >
       <Grid container spacing={3}>
         {/* Header */}
         <Grid item xs={12}>
-          <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 2 }}>
-            <Typography variant="h5" component="h1" sx={{ fontWeight: 'bold', color: 'primary.main' }}>
-              {isEditing ? 'Editar Cliente' : 'Registro de Cliente'}
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              mb: 2,
+            }}
+          >
+            <Typography
+              variant="h5"
+              component="h1"
+              sx={{ fontWeight: "bold", color: "primary.main" }}
+            >
+              {isEditing ? "Editar Cliente" : "Registro de Cliente"}
             </Typography>
             <Box>
               <Tooltip title="Escanear QR">
-                <IconButton 
-                  color="primary" 
+                <IconButton
+                  color="primary"
                   onClick={() => {
                     setOpenModal(true);
                   }}
@@ -100,22 +113,22 @@ const ClienteForm = ({ onSubmit, initialData = null, isEditing = false }) => {
                 </IconButton>
               </Tooltip>
               <Button
-                variant="outlined"
-                color="secondary"
-                startIcon={<KeyboardReturnIcon />}
-                href="/"
-                sx={{ mr: 1 }}
-              >
-                Regresar
-              </Button>
-              <Button
                 variant="contained"
                 color="primary"
                 startIcon={<SaveIcon />}
                 onClick={handleSubmit}
                 disabled={loading}
+                sx={{ mr: 1 }}
               >
-                {loading ? 'Guardando...' : 'Guardar'}
+                {loading ? "Guardando..." : "Guardar"}
+              </Button>
+              <Button
+                variant="outlined"
+                color="secondary"
+                startIcon={<KeyboardReturnIcon />}
+                onClick={() => router.back()}
+              >
+                Regresar
               </Button>
             </Box>
           </Box>
@@ -141,10 +154,10 @@ const ClienteForm = ({ onSubmit, initialData = null, isEditing = false }) => {
             onChange={handleChange}
             required
             disabled={isEditing}
-            inputProps={{ 
+            inputProps={{
               maxLength: 11,
               pattern: "[0-9]*",
-              inputMode: "numeric"
+              inputMode: "numeric",
             }}
           />
         </Grid>

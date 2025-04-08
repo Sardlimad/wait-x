@@ -95,12 +95,12 @@ export const MyDrawer = ({ open, toggleDrawer }) => {
     //   route: "/localidades",
     //   icon: <PlaceIcon sx={{ color: theme.palette.primary.main }} />,
     // },
-    {
-      key: 5,
-      name: "Fallos",
-      route: "/fallos",
-      icon: <AssignmentLateIcon sx={{ color: theme.palette.primary.main }} />,
-    },
+    // {
+    //   key: 5,
+    //   name: "Fallos",
+    //   route: "/fallos",
+    //   icon: <AssignmentLateIcon sx={{ color: theme.palette.primary.main }} />,
+    // },
   ];
 
   return (

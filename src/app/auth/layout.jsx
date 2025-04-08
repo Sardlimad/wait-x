@@ -4,6 +4,7 @@ import { Box, Container, Typography } from "@mui/material";
 import { ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import businessTheme from "../../themes/bussiness_theme";
+import { APP_NAME } from "../../settings/settings";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -48,7 +49,7 @@ export default function AuthLayout({ children }) {
                     color: 'primary.main',
                   }}
                 >
-                  Bienvenido a WaitX
+                  Bienvenido a {APP_NAME}
                 </Typography>
                 <Typography
                   variant="subtitle1"

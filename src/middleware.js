@@ -5,7 +5,7 @@ export function middleware(request) {
   const token = request.cookies.get('token')?.value;
 
   // Rutas públicas que no requieren autenticación
-  const publicPaths = ['/auth/login', '/auth/register'];
+  const publicPaths = ['/auth/login', '/auth/forgot-password'];
   
   // Verificar si la ruta actual es pública
   const isPublicPath = publicPaths.some(path => 

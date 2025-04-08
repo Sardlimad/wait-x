@@ -9,6 +9,7 @@ import {
   IconButton,
   Paper,
   Container,
+  Link,
 } from "@mui/material";
 import { Visibility, VisibilityOff, Person, Lock } from "@mui/icons-material";
 import { useAuth } from "../../hooks/useAuth";
@@ -50,7 +51,7 @@ export default function LoginForm() {
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
-          justifyContent: "center"
+          justifyContent: "center",
         }}
       >
         <Paper
@@ -132,6 +133,37 @@ export default function LoginForm() {
             >
               {isLoading ? "Iniciando sesión..." : "Iniciar Sesión"}
             </Button>
+            <Box sx={{ textAlign: "center" }}>
+              <Link
+                component="button"
+                variant="body2"
+                onClick={() => router.push("/auth/forgot-password")}
+                sx={{
+                  color: "text.secondary",
+                  textDecoration: "none",
+                  "&:hover": {
+                    color: "primary.main",
+                  },
+                }}
+              >
+                ¿Olvidaste tu contraseña?
+              </Link>
+            </Box>
+            {/* <Box
+              component="a"
+              href="/auth/forgot-password"
+              sx={{
+                textAlign: "center",
+                display: "block",
+                color: "primary.main",
+                textDecoration: "none",
+                "&:hover": {
+                  textDecoration: "underline",
+                },
+              }}
+            >
+              ¿Olvidaste tu contraseña?
+            </Box> */}
           </Box>
         </Paper>
       </Box>

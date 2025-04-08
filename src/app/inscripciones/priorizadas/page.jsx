@@ -1,8 +1,8 @@
 import React from "react";
-import ListView from "../../../components/ListView";
+import InscripcionesPriorizadasView from "../../../components/views/InscripcionesPriorizadasView";
 
 export const InsPriorizadas = () => {
-  return <ListView title={"Consulta de inscripciones priorizadas"}/>;
+  return <InscripcionesPriorizadasView />;
 };
 
 export default InsPriorizadas;

@@ -44,9 +44,6 @@ export default function RutasPage() {
 
   return (
     <Box sx={{ p: 3 }}>
-      <Typography variant="h4" component="h1" gutterBottom>
-        Registro de Rutas
-      </Typography>
       <RutaForm onSubmit={handleSubmit} localidades={localidades} />
     </Box>
   );
