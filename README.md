@@ -1,36 +1,68 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# WaitX - Sistema Gestor de Lista de Espera
 
-## Getting Started
+![WaitX Logo](./public/logo.png)
 
-First, run the development server:
+## 📋 Descripción
+
+WaitX es una aplicación web moderna diseñada para gestionar eficientemente listas de espera en sistemas de transporte. Desarrollada con Next.js y Material-UI, ofrece una interfaz intuitiva para la administración de rutas, horarios y pasajeros.
+
+## ✨ Características
+
+- 🚌 Gestión de rutas y horarios
+- 📍 Control de localidades y destinos
+- 👥 Administración de listas de espera
+- 📊 Panel de control intuitivo
+- 🔒 Sistema de autenticación seguro
+
+## 🚀 Tecnologías
+
+- Next.js 14
+- Material-UI
+- Moment.js
+- Node.js
+
+## 💻 Instalación
 
 ```bash
+# Clonar el repositorio
+git clone https://github.com/sardlimad/wait-x.git
+
+# Instalar dependencias
+cd wait-x
+npm install
+
+# Configurar variables de entorno
+cp .env.example .env.local
+
+# Iniciar servidor de desarrollo
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 📦 Estructura del Proyecto
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```
+wait-x/
+├── src/
+│   ├── app/         # Rutas y páginas
+│   ├── components/  # Componentes reutilizables
+│   ├── lib/        # Utilidades y configuraciones
+│   └── styles/     # Estilos globales
+├── public/         # Archivos estáticos
+└── ...
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🤝 Contribuir
 
-## Learn More
+Las contribuciones son bienvenidas. Por favor, lee primero las [guías de contribución](CONTRIBUTING.md).
 
-To learn more about Next.js, take a look at the following resources:
+## 📄 Licencia
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Este proyecto está bajo la Licencia MIT - ver el archivo [LICENSE.md](LICENSE.md) para más detalles.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 👥 Equipo
 
-## Deploy on Vercel
+- David González - Desarrollador Principal
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Desarrollado con ❤️ usando Next.js
