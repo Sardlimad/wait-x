@@ -53,14 +53,6 @@ const InscripcionesRegularesView = () => {
     console.log("Eliminar inscripción:", inscripcion);
   };
 
-  // Configuración personalizada para los encabezados de la tabla
-  const customHeaders = {
-    estudiante: "Estudiante",
-    curso: "Curso",
-    fecha_inscripcion: "Fecha de Inscripción",
-    estado: "Estado",
-  };
-
   // Campos por los que se puede buscar
   const searchFields = ["ruta", "cliente"];
 
@@ -87,7 +79,6 @@ const InscripcionesRegularesView = () => {
           data={inscripciones}
           onEdit={handleEdit}
           onDelete={handleDelete}
-          customHeaders={customHeaders}
           searchFields={searchFields}
           excludeFields={excludeFields}
         />

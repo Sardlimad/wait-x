@@ -18,7 +18,7 @@ import React, { useState } from "react";
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useLoading } from "../../app/layout";
+import { useLoading } from '../../context/LoadingContext';
 
 //material icons
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
@@ -31,8 +31,18 @@ import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord";
 import PlaceIcon from '@mui/icons-material/Place';
 import AssignmentLateIcon from '@mui/icons-material/AssignmentLate';
-import { styled } from '@mui/material/styles';
+import AssignmentIndIcon from '@mui/icons-material/AssignmentInd';
+
+import { alpha, styled } from '@mui/material/styles';
 import { APP_NAME } from "../../settings/settings";
+
+// Añade estos imports al inicio del archivo
+import LightModeIcon from '@mui/icons-material/LightMode';
+import DarkModeIcon from '@mui/icons-material/DarkMode';
+import { IconButton, Tooltip } from '@mui/material';
+
+// Añade este import
+import { useTheme as useCustomTheme } from '../../context/ThemeContext';
 
 // Actualiza el StyledDrawer
 const StyledDrawer = styled(Drawer)(({ theme }) => ({
@@ -64,8 +74,8 @@ const StyledListItemButton = styled(ListItemButton)(({ theme }) => ({
 }));
 
 export const MyDrawer = ({ open, toggleDrawer }) => {
-  // const { authData } = useAuth();
-  const theme = useTheme();
+  const theme = useTheme(); // Tema de MUI
+  const { mode, toggleTheme } = useCustomTheme(); // Nuestro contexto personalizado
   const router = useRouter();
   const { setIsLoading } = useLoading();
   const [openMenus, setOpenMenus] = useState({});
@@ -132,6 +142,12 @@ export const MyDrawer = ({ open, toggleDrawer }) => {
     //   route: "/fallos",
     //   icon: <AssignmentLateIcon sx={{ color: theme.palette.primary.main }} />,
     // },
+    {
+      key: 6,
+      name: "Usuarios",
+      route: "/usuarios",
+      icon: <AssignmentIndIcon sx={{ color: theme.palette.primary.main }} />,
+    },
   ];
 
   return (
@@ -145,9 +161,9 @@ export const MyDrawer = ({ open, toggleDrawer }) => {
           pt: 2,
           pb: 4,
           px: 3,
-          background: theme.palette.mode === 'dark'
-            ? 'linear-gradient(180deg, #1a1a1a 0%, #2d2d2d 100%)'
-            : 'linear-gradient(180deg, rgba(255,255,255,0.98) 0%, rgba(250,250,250,0.98) 100%)',
+          // background: theme.palette.mode === 'dark'
+          //   ? 'linear-gradient(180deg, #1a1a1a 0%, #2d2d2d 100%)'
+          //   : 'linear-gradient(180deg, rgba(255,255,255,0.98) 0%, rgba(250,250,250,0.98) 100%)',
         }}
         role="presentation"
       >
@@ -159,13 +175,24 @@ export const MyDrawer = ({ open, toggleDrawer }) => {
           alignItems: 'center',
           position: 'relative'
         }}>
+          <Box
+            component="img"
+            src="/app_logo_black.png"
+            alt="App Logo"
+            sx={{
+              width: 60,
+              height: 60,
+              my: 2,
+              filter: theme.palette.mode === 'dark' ? 'invert(1)' : 'none'
+            }}
+          />
           <Typography
             variant="h5"
             sx={{
               fontWeight: 700,
-              background: 'linear-gradient(45deg, #304FFE, #0026CA)',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
+              // background: 'linear-gradient(45deg,rgb(4, 7, 23),rgb(0, 6, 35))',
+              // WebkitBackgroundClip: 'text',
+              // WebkitTextFillColor: 'transparent',
               mb: 1
             }}
           >
@@ -173,16 +200,16 @@ export const MyDrawer = ({ open, toggleDrawer }) => {
           </Typography>
           
           {/* Línea decorativa */}
-          <Box sx={{
+          {/* <Box sx={{
             width: '60%',
             height: '4px',
-            background: 'linear-gradient(90deg, transparent, #304FFE, transparent)',
+            // background: 'linear-gradient(90deg, transparent,rgb(4, 7, 24), transparent)',
             borderRadius: '2px',
             mb: 3
-          }} />
+          }} /> */}
 
           {/* Indicador de estado del sistema */}
-          <Box sx={{
+          {/* <Box sx={{
             display: 'flex',
             alignItems: 'center',
             gap: 1,
@@ -209,7 +236,7 @@ export const MyDrawer = ({ open, toggleDrawer }) => {
             >
               Sistema Activo
             </Typography>
-          </Box>
+          </Box> */}
         </Box>
 
         <Divider sx={{ 
@@ -265,6 +292,69 @@ export const MyDrawer = ({ open, toggleDrawer }) => {
             </React.Fragment>
           ))}
         </List>
+
+        {/* Theme Toggle Buttons */}
+        <Box
+          sx={{
+            position: 'absolute',
+            bottom: 0,
+            left: 0,
+            right: 0,
+            p: 2,
+            display: 'flex',
+            justifyContent: 'center',
+            gap: 2,
+            borderTop: `1px solid ${alpha(theme.palette.divider, 0.1)}`,
+            background: theme.palette.mode === 'dark'
+              ? 'linear-gradient(0deg, rgba(0,0,0,0.3) 0%, transparent 100%)'
+              : 'linear-gradient(0deg, rgba(255,255,255,0.9) 0%, transparent 100%)',
+            backdropFilter: 'blur(8px)',
+          }}
+        >
+          <Tooltip title="Modo Claro" placement="top">
+            <IconButton
+              onClick={toggleTheme}
+              sx={{
+                bgcolor: mode === 'light' 
+                  ? alpha(theme.palette.primary.main, 0.1)
+                  : 'transparent',
+                '&:hover': {
+                  bgcolor: alpha(theme.palette.primary.main, 0.15),
+                },
+              }}
+            >
+              <LightModeIcon 
+                sx={{ 
+                  color: mode === 'light'
+                    ? theme.palette.primary.main
+                    : theme.palette.text.secondary
+                }} 
+              />
+            </IconButton>
+          </Tooltip>
+          
+          <Tooltip title="Modo Oscuro" placement="top">
+            <IconButton
+              onClick={toggleTheme}
+              sx={{
+                bgcolor: mode === 'dark' 
+                  ? alpha(theme.palette.primary.main, 0.1)
+                  : 'transparent',
+                '&:hover': {
+                  bgcolor: alpha(theme.palette.primary.main, 0.15),
+                },
+              }}
+            >
+              <DarkModeIcon 
+                sx={{ 
+                  color: mode === 'dark'
+                    ? theme.palette.primary.main
+                    : theme.palette.text.secondary
+                }} 
+              />
+            </IconButton>
+          </Tooltip>
+        </Box>
       </Box>
     </StyledDrawer>
   );

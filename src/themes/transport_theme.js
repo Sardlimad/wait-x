@@ -1,9 +1,10 @@
-import { createTheme } from "@mui/material/styles";
+import { createTheme, alpha } from "@mui/material/styles";
 
 // Tema empresarial para agencia de transporte
 // Paleta: Azules, blancos y grises
 const transportTheme = createTheme({
   palette: {
+    mode: 'light', // esto será cambiado por el ThemeContext
     primary: {
       main: "#1e4d8c", // Azul corporativo oscuro
       light: "#4c77ba",
@@ -37,15 +38,33 @@ const transportTheme = createTheme({
       dark: "#b53d00",
     },
     background: {
-      default: "#f5f7fa", // Fondo principal gris muy claro
-      paper: "#ffffff", // Fondo de componentes blanco
+      default: {
+        light: '#f5f7fa',
+        dark: '#121212'
+      },
+      paper: {
+        light: '#ffffff',
+        dark: '#1e1e1e'
+      }
     },
     text: {
-      primary: "#2c3e50", // Texto principal azul oscuro
-      secondary: "#546e7a", // Texto secundario gris azulado
-      disabled: "#90a4ae", // Texto deshabilitado gris claro
+      primary: {
+        light: '#2c3e50',
+        dark: '#e0e0e0'
+      },
+      secondary: {
+        light: '#546e7a',
+        dark: '#a0a0a0'
+      },
+      disabled: {
+        light: '#90a4ae',
+        dark: '#6c6c6c'
+      }
     },
-    divider: "rgba(0, 0, 0, 0.08)", // Divisores sutiles
+    divider: {
+      light: 'rgba(0, 0, 0, 0.08)',
+      dark: 'rgba(255, 255, 255, 0.08)'
+    }
   },
   typography: {
     fontFamily: "'Inter', 'Roboto', sans-serif",
@@ -140,54 +159,86 @@ const transportTheme = createTheme({
   components: {
     MuiCssBaseline: {
       styleOverrides: {
-        body: {
+        body: ({ theme }) => ({
+          backgroundColor: theme.palette.mode === 'dark' ? '#121212' : '#f5f7fa',
+          color: theme.palette.mode === 'dark' ? '#e0e0e0' : '#2c3e50',
           scrollbarWidth: "thin",
           "&::-webkit-scrollbar": {
             width: "8px",
             height: "8px",
           },
           "&::-webkit-scrollbar-track": {
-            background: "#f1f1f1",
+            background: theme.palette.mode === 'dark' ? '#1e1e1e' : '#f1f1f1',
           },
           "&::-webkit-scrollbar-thumb": {
-            backgroundColor: "#bdbdbd",
+            backgroundColor: theme.palette.mode === 'dark' ? '#424242' : '#bdbdbd',
             borderRadius: "4px",
           },
           "&::-webkit-scrollbar-thumb:hover": {
-            background: "#9e9e9e",
+            background: theme.palette.mode === 'dark' ? '#616161' : '#9e9e9e',
+          },
+        }),
+      },
+    },
+    MuiBox: {
+      variants: [
+        {
+          props: { variant: 'listView' },
+          style: {
+            margin: { xs: '5px', md: '30px' },
+            padding: '20px',
+            borderRadius: '8px',
           },
         },
-      },
+      ],
     },
     MuiButton: {
       styleOverrides: {
         root: {
-          borderRadius: 6,
-          padding: "8px 16px",
-          boxShadow: "0 2px 4px rgba(30, 77, 140, 0.1)",
-          transition: "all 0.2s ease-in-out",
-          textTransform: "none",
+          height: 40,
+          minWidth: 120,
+          textTransform: 'none',
+          borderRadius: 8,
+          padding: '8px 16px',
           fontWeight: 600,
-          "&:hover": {
-            transform: "translateY(-1px)",
-            boxShadow: "0 4px 8px rgba(30, 77, 140, 0.2)",
+          transition: 'all 0.2s ease',
+          '&:hover': {
+            transform: 'translateY(-1px)',
+          },
+        },
+        contained: {
+          boxShadow: 'none',
+          '&:hover': {
+            boxShadow: ({ theme }) => 
+              `0 4px 12px ${alpha(theme.palette.primary.main, 0.2)}`,
           },
         },
         containedPrimary: {
-          backgroundImage: "linear-gradient(135deg, #1e4d8c 0%, #2a5da3 100%)",
+          background: ({ theme }) => theme.palette.mode === 'dark' 
+            ? `linear-gradient(45deg, ${theme.palette.primary.dark} 30%, ${theme.palette.primary.main} 90%)`
+            : `linear-gradient(45deg, ${theme.palette.primary.main} 30%, ${theme.palette.primary.light} 90%)`,
         },
-        containedSecondary: {
-          backgroundImage: "linear-gradient(135deg, #3878d1 0%, #4b89de 100%)",
+        outlined: {
+          borderWidth: '1.5px',
+          '&:hover': {
+            borderWidth: '1.5px',
+            backgroundColor: ({ theme }) => alpha(theme.palette.secondary.main, 0.05),
+          },
         },
       },
     },
     MuiPaper: {
       styleOverrides: {
-        root: {
+        root: ({ theme }) => ({
           backgroundImage: "none",
+          backgroundColor: theme.palette.mode === 'dark' 
+            ? alpha(theme.palette.background.paper, 0.12)
+            : theme.palette.background.paper,
           borderRadius: 10,
-          boxShadow: "0 2px 12px rgba(0, 0, 0, 0.05)",
-        },
+          boxShadow: theme.palette.mode === 'dark'
+            ? '0 2px 12px rgba(0, 0, 0, 0.2)'
+            : '0 2px 12px rgba(0, 0, 0, 0.05)',
+        }),
         elevation1: {
           boxShadow: "0 2px 6px rgba(0, 0, 0, 0.04), 0 0 1px rgba(0, 0, 0, 0.06)",
         },
@@ -205,17 +256,26 @@ const transportTheme = createTheme({
     MuiAppBar: {
       styleOverrides: {
         root: {
-          backgroundImage: "linear-gradient(90deg, #1e4d8c 0%, #2a5da3 100%)",
-          boxShadow: "0 2px 10px rgba(0, 0, 0, 0.08)",
+          backgroundColor: ({ theme }) => theme.palette.mode === 'dark'
+            ? alpha(theme.palette.background.default, 0.9)
+            : alpha(theme.palette.background.paper, 0.9),
+          backdropFilter: 'blur(8px)',
+          borderBottom: ({ theme }) => `1px solid ${alpha(theme.palette.divider, 0.1)}`,
+          boxShadow: ({ theme }) => `0 1px 3px 0 ${alpha(theme.palette.primary.main, 0.1)}`,
         },
       },
     },
     MuiDrawer: {
       styleOverrides: {
         paper: {
-          backgroundColor: "#ffffff",
-          borderRight: "1px solid rgba(0, 0, 0, 0.08)",
-          boxShadow: "2px 0 8px rgba(0, 0, 0, 0.05)",
+          backgroundColor: ({ theme }) => theme.palette.mode === 'dark'
+            ? alpha(theme.palette.background.default, 0.95)
+            : alpha(theme.palette.background.paper, 0.95),
+          backdropFilter: 'blur(10px)',
+          borderRight: ({ theme }) => `1px solid ${alpha(theme.palette.divider, 0.1)}`,
+          boxShadow: ({ theme }) => theme.palette.mode === 'dark'
+            ? '4px 0 24px rgba(0, 0, 0, 0.3)'
+            : '4px 0 24px rgba(0, 0, 0, 0.1)',
         },
       },
     },
@@ -262,25 +322,88 @@ const transportTheme = createTheme({
       styleOverrides: {
         root: {
           "& .MuiOutlinedInput-root": {
-            borderRadius: 6,
-            transition: "background-color 0.2s ease",
+            borderRadius: 8,
+            backgroundColor: ({ theme }) => theme.palette.mode === 'dark'
+              ? alpha(theme.palette.background.paper, 0.1)
+              : alpha(theme.palette.background.paper, 0.8),
+            "&:hover": {
+              backgroundColor: ({ theme }) => theme.palette.mode === 'dark'
+                ? alpha(theme.palette.background.paper, 0.15)
+                : alpha(theme.palette.background.paper, 0.9),
+            },
             "&.Mui-focused": {
-              boxShadow: "0 0 0 3px rgba(56, 120, 209, 0.12)",
+              backgroundColor: ({ theme }) => theme.palette.mode === 'dark'
+                ? alpha(theme.palette.background.paper, 0.2)
+                : theme.palette.background.paper,
             },
           },
         },
       },
+      variants: [
+        {
+          props: { variant: 'search' },
+          style: {
+            minWidth: 250,
+            '& .MuiOutlinedInput-root': {
+              borderRadius: 8,
+              backgroundColor: ({ theme }) => alpha(theme.palette.background.paper, 0.8),
+            },
+          },
+        },
+      ],
+    },
+    MuiOutlinedInput: {
+      styleOverrides: {
+        root: ({ theme }) => ({
+          borderRadius: 8,
+          backgroundColor: theme.palette.mode === 'dark' 
+            ? alpha(theme.palette.background.paper, 0.1)
+            : alpha(theme.palette.background.paper, 0.8),
+          transition: 'all 0.2s ease',
+          // Asegura que el borde sea visible siempre
+          '& .MuiOutlinedInput-notchedOutline': {
+            borderColor: theme.palette.mode === 'dark'
+              ? alpha(theme.palette.divider, 0.3)
+              : alpha(theme.palette.divider, 0.23),
+            transition: 'border-color 0.2s ease'
+          },
+          '&:hover': {
+            backgroundColor: theme.palette.mode === 'dark'
+              ? alpha(theme.palette.background.paper, 0.15)
+              : alpha(theme.palette.background.paper, 0.9),
+            '& .MuiOutlinedInput-notchedOutline': {
+              borderColor: theme.palette.mode === 'dark'
+                ? alpha(theme.palette.primary.main, 0.4)
+                : alpha(theme.palette.primary.main, 0.3)
+            }
+          },
+          '&.Mui-focused': {
+            backgroundColor: theme.palette.mode === 'dark'
+              ? alpha(theme.palette.background.paper, 0.2)
+              : theme.palette.background.paper,
+            '& .MuiOutlinedInput-notchedOutline': {
+              borderColor: theme.palette.primary.main,
+              borderWidth: 2
+            }
+          }
+        })
+      }
     },
     MuiTableCell: {
       styleOverrides: {
         root: {
           padding: "12px 16px",
           borderColor: "rgba(0, 0, 0, 0.08)",
+          borderBottom: ({ theme }) => `1px solid ${alpha(theme.palette.divider, 0.1)}`,
         },
         head: {
           fontWeight: 600,
-          backgroundColor: "#f5f7fa",
-          color: "#2c3e50",
+          backgroundColor: ({ theme }) => theme.palette.mode === 'dark'
+            ? alpha(theme.palette.primary.main, 0.15)
+            : alpha(theme.palette.primary.main, 0.1),
+          color: ({ theme }) => theme.palette.mode === 'dark'
+            ? theme.palette.primary.light
+            : theme.palette.primary.main,
         },
       },
     },
@@ -338,10 +461,44 @@ const transportTheme = createTheme({
         },
       },
     },
+    MuiListItemButton: {
+      styleOverrides: {
+        root: {
+          margin: '4px 8px',
+          borderRadius: 8,
+          transition: 'all 0.2s ease',
+          '&:hover': {
+            backgroundColor: ({ theme }) => alpha(theme.palette.primary.main, 0.08),
+            transform: 'translateX(4px)',
+          },
+          '&.Mui-selected': {
+            backgroundColor: ({ theme }) => alpha(theme.palette.primary.main, 0.12),
+            '&:hover': {
+              backgroundColor: ({ theme }) => alpha(theme.palette.primary.main, 0.16),
+            },
+          },
+        },
+      },
+    },
+    MuiTableContainer: {
+      styleOverrides: {
+        root: {
+          backgroundColor: ({ theme }) => theme.palette.mode === 'dark'
+            ? alpha(theme.palette.background.paper, 0.2)
+            : theme.palette.background.paper,
+          backdropFilter: 'blur(10px)',
+          borderRadius: 12,
+          border: ({ theme }) => `1px solid ${alpha(theme.palette.divider, 0.1)}`,
+          boxShadow: ({ theme }) => theme.palette.mode === 'dark'
+            ? '0 4px 20px rgba(0, 0, 0, 0.2)'
+            : '0 4px 20px rgba(0, 0, 0, 0.05)',
+        },
+      },
+    },
     MuiDivider: {
       styleOverrides: {
         root: {
-          borderColor: "rgba(0, 0, 0, 0.08)",
+          borderColor: ({ theme }) => alpha(theme.palette.divider, 0.1),
         },
       },
     },
@@ -353,7 +510,70 @@ const transportTheme = createTheme({
         },
       },
     },
+    MuiIconButton: {
+      styleOverrides: {
+        root: {
+          transition: 'all 0.2s ease',
+          '&:hover': {
+            transform: 'translateY(-1px)',
+            backgroundColor: ({ theme }) => alpha(theme.palette.primary.main, 0.08),
+          },
+        },
+      },
+    },
+    MuiTypography: {
+      variants: [
+        {
+          props: { variant: 'listViewTitle' },
+          style: {
+            position: 'relative',
+            fontWeight: 700,
+            letterSpacing: '0.5px',
+            display: 'inline-block',
+            paddingBottom: 1,
+            marginBlock: 2,
+            color: ({ theme }) => theme.palette.primary.main,
+            '&::after': {
+              content: '""',
+              position: 'absolute',
+              bottom: 0,
+              left: 0,
+              width: '40%',
+              height: '2px',
+              backgroundColor: 'currentColor',
+              borderRadius: '2px',
+              transition: 'width 0.3s ease',
+              opacity: 0.7,
+            },
+            '&:hover::after': {
+              width: '100%',
+            },
+          },
+        },
+      ],
+    },
   },
 });
 
-export default transportTheme; 
+// Función para modificar el tema según el modo
+export const getThemeWithMode = (mode) => {
+  return createTheme({
+    ...transportTheme,
+    palette: {
+      ...transportTheme.palette,
+      mode,
+      background: {
+        default: transportTheme.palette.background.default[mode],
+        paper: transportTheme.palette.background.paper[mode]
+      },
+      text: {
+        primary: transportTheme.palette.text.primary[mode],
+        secondary: transportTheme.palette.text.secondary[mode],
+        disabled: transportTheme.palette.text.disabled[mode]
+      },
+      divider: transportTheme.palette.divider[mode]
+    }
+  });
+};
+
+export default transportTheme;

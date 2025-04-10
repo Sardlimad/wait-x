@@ -48,13 +48,6 @@ const ClientesView = () => {
     console.log("Eliminar cliente:", cliente);
   };
 
-  // Configuración personalizada para los encabezados de la tabla
-  const customHeaders = {
-    ci: "Carnet de Identidad",
-    nombre: "Nombre",
-    apellidos: "Apellidos",
-  };
-
   // Campos por los que se puede buscar
   const searchFields = ["ci", "nombre", "apellidos"];
 
@@ -73,7 +66,6 @@ const ClientesView = () => {
           data={clientes}
           onEdit={handleEdit}
           onDelete={handleDelete}
-          customHeaders={customHeaders}
           searchFields={searchFields}
           excludeFields={["id"]} // Excluir el ID de MongoDB
         />

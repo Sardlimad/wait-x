@@ -56,16 +56,6 @@ const RutasView = () => {
     console.log("Eliminar ruta:", ruta);
   };
 
-  // Configuración personalizada para los encabezados de la tabla
-  const customHeaders = {
-    codigo: "Código",
-    origen_nombre: "Origen",
-    destino_nombre: "Destino",
-    distancia: "Distancia (km)",
-    duracion: "Duración (min)",
-    precio: "Precio (CUP)"
-  };
-
   // Campos por los que se puede buscar
   const searchFields = ["codigo", "origen_nombre", "destino_nombre"];
 
@@ -92,7 +82,6 @@ const RutasView = () => {
           data={rutas}
           onEdit={handleEdit}
           onDelete={handleDelete}
-          customHeaders={customHeaders}
           searchFields={searchFields}
           excludeFields={excludeFields}
         />

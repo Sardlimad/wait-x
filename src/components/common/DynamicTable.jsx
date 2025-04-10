@@ -23,6 +23,7 @@ import {
   Search as SearchIcon,
 } from '@mui/icons-material';
 import { styled } from '@mui/system';
+import { columnsNameDictionary } from '../../config/coumnsNameDictionary';
 
 const StyledTableContainer = styled(TableContainer)(({ theme }) => ({
   background: theme.palette.mode === 'dark' 
@@ -60,7 +61,6 @@ const DynamicTable = ({
   onEdit,
   onDelete,
   excludeFields = ['id'], // Campos a excluir de la tabla
-  customHeaders = {}, // Nombres personalizados para los encabezados
   searchFields = [], // Campos por los que se puede buscar
   searchTerm = '', // Recibimos searchTerm como prop
   ...restProps // Resto de props que podrían ser pasadas
@@ -136,7 +136,7 @@ const DynamicTable = ({
 
   // Obtener el nombre de la columna (personalizado o por defecto)
   const getColumnName = (field) => {
-    return customHeaders[field] || field.charAt(0).toUpperCase() + field.slice(1);
+    return columnsNameDictionary[field] || field.charAt(0).toUpperCase() + field.slice(1);
   };
 
   return (

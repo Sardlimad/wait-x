@@ -12,8 +12,9 @@ import { APP_NAME } from '../../settings/settings';
 import { MyDrawer } from './MyDrawer';
 import AccountMenu from './AccountMenu';
 
-import { styled, useTheme } from '@mui/material/styles';
+import { styled, useTheme as useMuiTheme } from '@mui/material/styles';
 import { alpha } from '@mui/material/styles';
+import { useTheme } from '../../context/ThemeContext'; // Cambia esta importación
 
 // Estilizar el AppBar
 const StyledAppBar = styled(AppBar)(({ theme }) => ({
@@ -37,9 +38,8 @@ const MenuButton = styled(IconButton)(({ theme }) => ({
 
 export default function NavBar() {
     const [openDrawer, setOpenDrawer] = React.useState(false);
-
-    // const { authData } = useAuth();
-    const theme = useTheme();
+    const { mode } = useTheme(); // Usa el contexto personalizado
+    const theme = useMuiTheme(); // Usa el tema de MUI
 
     const toggleDrawer = (newOpen) => () => {
         setOpenDrawer(newOpen);

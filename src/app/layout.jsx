@@ -1,60 +1,21 @@
 "use client";
 import { Box, CircularProgress, Backdrop } from "@mui/material";
-import React, { useEffect, useState, createContext, useContext } from "react";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import React from "react";
+import { usePathname, useRouter } from "next/navigation";
 import { useAuth } from "../hooks/useAuth";
-
-//styles
 import "./globals.css";
-import { ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
-import transportTheme from "../themes/transport_theme";
-
-//material ui components
 import NavBar from "../components/custom/NavBar";
+import { ThemeProvider } from '../context/ThemeContext';
+import { LoadingProvider } from '../context/LoadingContext'; // Mover LoadingProvider a un archivo separado
 
-// Loading Context
-const LoadingContext = createContext({
-  isLoading: false,
-  setIsLoading: () => {}
-});
-
-export const useLoading = () => useContext(LoadingContext);
-
-// Loading Provider Component
-const LoadingProvider = ({ children }) => {
-  const [isLoading, setIsLoading] = useState(false);
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
-
-  // Reset loading state on route change
-  useEffect(() => {
-    setIsLoading(false);
-  }, [pathname, searchParams]);
-
-  return (
-    <LoadingContext.Provider value={{ isLoading, setIsLoading }}>
-      {children}
-      <Backdrop
-        sx={{
-          color: '#fff',
-          zIndex: (theme) => theme.zIndex.drawer + 2,
-          backgroundColor: 'rgba(0, 0, 0, 0.5)',
-        }}
-        open={isLoading}
-      >
-        <CircularProgress color="primary" />
-      </Backdrop>
-    </LoadingContext.Provider>
-  );
-};
-
-export const MainLayout = ({ children }) => {
+export default function RootLayout({ children }) {
   const pathname = usePathname();
   const router = useRouter();
   const { isAuthenticated, isLoading: authLoading } = useAuth();
 
-  useEffect(() => {
+  // Manejar la autenticación
+  React.useEffect(() => {
     if (!authLoading) {
       const isAuthPath = pathname.startsWith('/auth');
       const isPublicPath = pathname === '/' || pathname === '/dashboard';
@@ -67,23 +28,19 @@ export const MainLayout = ({ children }) => {
     }
   }, [isAuthenticated, authLoading, pathname, router]);
 
-  // Si estamos en la página de login, no usamos el layout
-  if (pathname.includes("/auth")) {
-    return <>{children}</>;
-  }
-
+  // Si estamos cargando la autenticación
   if (authLoading) {
     return (
       <html lang="es">
         <body>
-          <ThemeProvider theme={transportTheme}>
-            <CssBaseline />
+          <ThemeProvider>
             <Box
               sx={{
                 display: 'flex',
                 justifyContent: 'center',
                 alignItems: 'center',
-                minHeight: '100vh',
+                height: '100vh',
+                width: '100vw',
               }}
             >
               <CircularProgress />
@@ -94,15 +51,44 @@ export const MainLayout = ({ children }) => {
     );
   }
 
+  // Si estamos en una ruta de autenticación
+  if (pathname.includes("/auth")) {
+    return (
+          <ThemeProvider>
+            <CssBaseline />
+            {children}
+          </ThemeProvider>
+    );
+  }
+
+  // Layout principal
   return (
     <html lang="es">
       <body>
-        <ThemeProvider theme={transportTheme}>
+        <ThemeProvider>
           <CssBaseline />
           <LoadingProvider>
-            <Box>
+            <Box 
+              // sx={{ 
+              //   display: 'flex', 
+              //   flexDirection: 'column',
+              //   minHeight: '100vh',
+              //   margin: 0,
+              //   padding: 0,
+              //   overflow: 'hidden'
+              // }}
+            >
               <NavBar />
-              <Box>
+              <Box 
+                component="main" 
+                // sx={{ 
+                //    flexGrow: 1,
+                //   marginTop: '64px', // altura del NavBar
+                //   padding: 0,
+                //   overflow: 'auto',
+                //   height: 'calc(100vh - 64px)'
+                // }}
+              >
                 {children}
               </Box>
             </Box>
@@ -111,6 +97,4 @@ export const MainLayout = ({ children }) => {
       </body>
     </html>
   );
-};
-
-export default MainLayout;
+}

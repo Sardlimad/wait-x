@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Cookies from 'js-cookie';
-import { API_URL } from '../settings/settings';
+import { API_URL } from '../config/settings';
 
 export function useAuth() {
   const [user, setUser] = useState(null);

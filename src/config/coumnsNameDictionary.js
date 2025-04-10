@@ -1,0 +1,15 @@
+export const columnsNameDictionary = {
+    email: 'Correo',
+    password: 'Contraseña',
+    username: 'Usuario',
+    first_name: 'Nombre',
+    last_name: 'Apellidos',
+    date_joined: 'Fecha de Registro',
+    ci: "Carnet de Identidad",
+    nombre: "Nombre",
+    apellidos: "Apellidos",
+    codigo: "Código",
+    origen_nombre: "Origen",
+    destino_nombre: "Destino",
+    fecha_inscripcion: "Fecha de Inscripción",
+}
