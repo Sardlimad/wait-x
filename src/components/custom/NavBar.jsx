@@ -12,10 +12,34 @@ import { APP_NAME } from '../../settings/settings';
 import { MyDrawer } from './MyDrawer';
 import AccountMenu from './AccountMenu';
 
+import { styled, useTheme } from '@mui/material/styles';
+import { alpha } from '@mui/material/styles';
+
+// Estilizar el AppBar
+const StyledAppBar = styled(AppBar)(({ theme }) => ({
+  background: theme.palette.mode === 'dark' 
+    ? alpha(theme.palette.background.default, 0.9)
+    : alpha(theme.palette.background.paper, 0.9),
+  backdropFilter: 'blur(8px)',
+  boxShadow: `0 1px 3px 0 ${alpha(theme.palette.primary.main, 0.1)}`,
+  borderBottom: `1px solid ${alpha(theme.palette.divider, 0.1)}`,
+  color: theme.palette.text.primary,
+}));
+
+// Estilizar el IconButton del menú
+const MenuButton = styled(IconButton)(({ theme }) => ({
+  borderRadius: theme.shape.borderRadius,
+  color: theme.palette.primary.main,
+  '&:hover': {
+    backgroundColor: alpha(theme.palette.primary.main, 0.08),
+  }
+}));
+
 export default function NavBar() {
     const [openDrawer, setOpenDrawer] = React.useState(false);
 
     // const { authData } = useAuth();
+    const theme = useTheme();
 
     const toggleDrawer = (newOpen) => () => {
         setOpenDrawer(newOpen);
@@ -23,26 +47,45 @@ export default function NavBar() {
 
     return (
         <Box sx={{ flexGrow: 1 }}>
-            <AppBar position="static" sx={{ borderRadius: "0px 0px 0px 0px" }}>
-                <Toolbar>
-                    <IconButton
-                        size="large"
-                        edge="start"
-                        color="inherit"
-                        aria-label="menu"
-                        sx={{ mr: 2 }}
-                        onClick={toggleDrawer(true)}
-                    >
-                        <MenuIcon />
-                    </IconButton>
-                    <Typography component="div" sx={{ flexGrow: 1 }}>
-                        {APP_NAME}
-                    </Typography>
-                    {/* <Typography fontWeight={"bold"} p={"10px"}>Hola, {authData.username}</Typography> */}
-                    {/* <LogoutBtn /> */}
-                    <AccountMenu />
+            <StyledAppBar position="fixed">
+                <Toolbar sx={{ 
+                    height: '70px',
+                    px: { xs: 2, sm: 4 },
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between'
+                }}>
+                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+                        <MenuButton
+                            edge="start"
+                            color="inherit"
+                            aria-label="menu"
+                            onClick={toggleDrawer(true)}
+                        >
+                            <MenuIcon />
+                        </MenuButton>
+                        <Typography 
+                            variant="h6" 
+                            sx={{ 
+                                fontWeight: 600,
+                                color: theme.palette.primary.main,
+                                letterSpacing: '0.5px'
+                            }}
+                        >
+                            {APP_NAME.SHORT}
+                        </Typography>
+                    </Box>
+
+                    <Box sx={{ 
+                        display: 'flex', 
+                        alignItems: 'center', 
+                        gap: 2 
+                    }}>
+                        <AccountMenu />
+                    </Box>
                 </Toolbar>
-            </AppBar>
+            </StyledAppBar>
+            <Toolbar /> {/* Espaciador para el AppBar fijo */}
             <MyDrawer toggleDrawer={toggleDrawer} open={openDrawer} />
         </Box >
     );

@@ -49,14 +49,14 @@ export default function AuthLayout({ children }) {
                     color: 'primary.main',
                   }}
                 >
-                  Bienvenido a {APP_NAME}
+                  Bienvenido a {APP_NAME.SHORT}
                 </Typography>
                 <Typography
                   variant="subtitle1"
                   color="text.secondary"
                   align="center"
                 >
-                  Sistema de Gestión de Lista de Espera
+                  {APP_NAME.LARGE}
                 </Typography>
               </Box>
 

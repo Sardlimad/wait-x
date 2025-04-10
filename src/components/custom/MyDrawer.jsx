@@ -31,6 +31,37 @@ import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord";
 import PlaceIcon from '@mui/icons-material/Place';
 import AssignmentLateIcon from '@mui/icons-material/AssignmentLate';
+import { styled } from '@mui/material/styles';
+import { APP_NAME } from "../../settings/settings";
+
+// Actualiza el StyledDrawer
+const StyledDrawer = styled(Drawer)(({ theme }) => ({
+  '& .MuiDrawer-paper': {
+    backgroundColor: theme.palette.mode === 'dark' 
+      ? '#1a1a1a' 
+      : 'rgba(255, 255, 255, 0.98)',
+    backdropFilter: 'blur(10px)',
+    border: 'none',
+    boxShadow: theme.palette.mode === 'dark'
+      ? '0 8px 32px rgba(0, 0, 0, 0.5)'
+      : '0 8px 32px rgba(0, 0, 0, 0.1)',
+    borderRadius: '0 24px 24px 0',
+    width: 300,
+  },
+}));
+
+// Agrega estos estilos personalizados para los items
+const StyledListItemButton = styled(ListItemButton)(({ theme }) => ({
+  margin: '4px 12px',
+  borderRadius: '12px',
+  transition: 'all 0.3s ease',
+  '&:hover': {
+    backgroundColor: theme.palette.mode === 'dark'
+      ? 'rgba(255, 255, 255, 0.05)'
+      : 'rgba(0, 0, 0, 0.04)',
+    transform: 'translateX(4px)',
+  },
+}));
 
 export const MyDrawer = ({ open, toggleDrawer }) => {
   // const { authData } = useAuth();
@@ -104,107 +135,137 @@ export const MyDrawer = ({ open, toggleDrawer }) => {
   ];
 
   return (
-    <Drawer
+    <StyledDrawer
       open={open}
       onClose={toggleDrawer(false)}
-      PaperProps={{
-        sx: {
-          borderRadius: "0 8px 8px 0",
-          bgcolor: theme.palette.background.paper,
-          boxShadow: theme.shadows[4],
-          color: theme.palette.text.primary,
-        },
-      }}
     >
       <Box
         sx={{
-          width: 280,
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          py: 3,
-          textAlign: "center",
+          width: '100%',
+          pt: 2,
+          pb: 4,
+          px: 3,
+          background: theme.palette.mode === 'dark'
+            ? 'linear-gradient(180deg, #1a1a1a 0%, #2d2d2d 100%)'
+            : 'linear-gradient(180deg, rgba(255,255,255,0.98) 0%, rgba(250,250,250,0.98) 100%)',
         }}
         role="presentation"
       >
-        <AccountCircleIcon
-          sx={{
-            width: 90,
-            height: 90,
-            color: theme.palette.primary.main,
-            mb: 2,
-          }}
-        />
-        <Typography
-          sx={{
-            fontWeight: "bold",
-            color: theme.palette.primary.dark,
-            mb: 1,
-          }}
-        >
-          {/* {authData.username} */}
-        </Typography>
-        <Divider sx={{ width: "80%", my: 2 }}>
+        {/* Logo y nombre de la app */}
+        <Box sx={{ 
+          mb: 4,
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          position: 'relative'
+        }}>
           <Typography
+            variant="h5"
             sx={{
-              fontWeight: "bold",
-              color: theme.palette.text.secondary,
-              mb: 1,
+              fontWeight: 700,
+              background: 'linear-gradient(45deg, #304FFE, #0026CA)',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+              mb: 1
             }}
           >
-            Menú Principal
+            {APP_NAME.SHORT}
           </Typography>
-        </Divider>
-        <List sx={{ width: "100%", bgcolor: theme.palette.background.paper }}>
+          
+          {/* Línea decorativa */}
+          <Box sx={{
+            width: '60%',
+            height: '4px',
+            background: 'linear-gradient(90deg, transparent, #304FFE, transparent)',
+            borderRadius: '2px',
+            mb: 3
+          }} />
+
+          {/* Indicador de estado del sistema */}
+          <Box sx={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: 1,
+            bgcolor: theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.03)',
+            borderRadius: '20px',
+            py: 1,
+            px: 2,
+          }}>
+            <Box
+              sx={{
+                width: 8,
+                height: 8,
+                borderRadius: '50%',
+                bgcolor: '#4CAF50',
+                boxShadow: '0 0 10px #4CAF50'
+              }}
+            />
+            <Typography
+              variant="body2"
+              sx={{
+                color: theme.palette.mode === 'dark' ? 'grey.400' : 'grey.600',
+                fontWeight: 500,
+              }}
+            >
+              Sistema Activo
+            </Typography>
+          </Box>
+        </Box>
+
+        <Divider sx={{ 
+          my: 2,
+          background: theme.palette.mode === 'dark' 
+            ? 'linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent)'
+            : 'linear-gradient(90deg, transparent, rgba(0,0,0,0.1), transparent)'
+        }} />
+
+        {/* Lista de opciones del menú */}
+        <List sx={{ 
+          width: "100%", 
+          bgcolor: 'transparent',
+          '& .MuiListItemIcon-root': {
+            minWidth: 40
+          }
+        }}>
           {options.map((option) => (
             <React.Fragment key={option.key}>
               {option.subItems ? (
                 <>
-                  <ListItemButton onClick={() => handleToggle(option.key)}>
+                  <StyledListItemButton onClick={() => handleToggle(option.key)} sx={{ '&:hover': { backgroundColor: theme.palette.action.hover } }}>
                     <ListItemIcon>{option.icon}</ListItemIcon>
                     <ListItemText primary={option.name} />
-                    {openMenus[option.key] ? (
-                      <ExpandLessIcon />
-                    ) : (
-                      <ExpandMoreIcon />
-                    )}
-                  </ListItemButton>
-                  <Collapse
-                    in={openMenus[option.key]}
-                    timeout="auto"
-                    unmountOnExit
-                    // sx={{pl: 10}}
-                  >
+                    {openMenus[option.key] ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+                  </StyledListItemButton>
+                  <Collapse in={openMenus[option.key]} timeout="auto" unmountOnExit>
                     <List component="div">
                       {option.subItems.map((subItem) => (
-                        <ListItemButton
+                        <StyledListItemButton
                           key={subItem.key}
-                          sx={{ pl: 6 }}
+                          sx={{ pl: 6, '&:hover': { backgroundColor: theme.palette.action.hover } }}
                           onClick={() => handleNavigation(subItem.route)}
                         >
                           <ListItemIcon sx={{ minWidth: 20 }}>
-                            <FiberManualRecordIcon
-                              sx={{ fontSize: 8, color: "gray" }}
-                            />
+                            <FiberManualRecordIcon sx={{ fontSize: 8, color: "gray" }} />
                           </ListItemIcon>
                           <ListItemText primary={subItem.name} />
-                        </ListItemButton>
+                        </StyledListItemButton>
                       ))}
                     </List>
                   </Collapse>
                 </>
               ) : (
-                <ListItemButton
+                <StyledListItemButton
                   onClick={() => handleNavigation(option.route)}
+                  sx={{ '&:hover': { backgroundColor: theme.palette.action.hover } }}
                 >
                   <ListItemIcon>{option.icon}</ListItemIcon>
                   <ListItemText primary={option.name} />
-                </ListItemButton>
+                </StyledListItemButton>
               )}
             </React.Fragment>
           ))}
         </List>
       </Box>
-    </Drawer>
+    </StyledDrawer>
   );
 };

@@ -210,8 +210,10 @@ const InscripcionPriorizadaForm = ({
               />
             </Grid>
             <Grid item xs={12} md={3}>
-              <FormControl fullWidth sx={{mt: 1}}>
-                <InputLabel id="causa-prio-select-label">Causa de Priorización</InputLabel>
+              <FormControl fullWidth sx={{ mt: 1 }}>
+                <InputLabel id="causa-prio-select-label">
+                  Causa de Priorización
+                </InputLabel>
                 <Select
                   labelId="causa-prio-select-label"
                   name="causa"
@@ -345,9 +347,11 @@ const InscripcionPriorizadaForm = ({
                 <Alert variant="outlined" severity="warning" sx={{ mt: 1 }}>
                   Solo se pueden seleccionar hasta 3 rutas.
                 </Alert>
-                // <Typography variant="body2" color="error" sx={{ mt: 2 }}>
-                //   Solo se pueden seleccionar hasta 3 rutas.
-                // </Typography>
+              )}
+              {formData.rutasSeleccionadas.length === 0 && (
+                <Alert variant="outlined" severity="warning" sx={{ mt: 1 }}>
+                  Es necesario seleccionar al menos 1 ruta.
+                </Alert>
               )}
             </Grid>
           </Grid>

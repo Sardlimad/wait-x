@@ -9,6 +9,7 @@ import {
   Typography,
   TextField,
   InputAdornment,
+  useTheme,
 } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import KeyboardReturnIcon from "@mui/icons-material/KeyboardReturn";
@@ -19,6 +20,7 @@ export const ListView = ({ title, children }) => {
   const pathname = usePathname();
   const router = useRouter();
   const [searchTerm, setSearchTerm] = useState("");
+  const theme = useTheme();
 
   // Clonar los children y pasar searchTerm como prop sólo a componentes React, no a elementos DOM
   const childrenWithProps = React.Children.map(children, (child) => {
@@ -31,10 +33,10 @@ export const ListView = ({ title, children }) => {
 
   return (
     <Box
-      bgcolor={"#fff"}
+      // bgcolor={"#fff"}
       m={{ xs: "5px", md: "30px" }}
       p="20px"
-      boxShadow={3}
+      // boxShadow={3}
       borderRadius="8px"
     >
       <Grid container alignItems="center" spacing={2}>
@@ -42,7 +44,30 @@ export const ListView = ({ title, children }) => {
           <Typography
             variant="h5"
             component="h1"
-            sx={{ fontWeight: "bold", color: "primary.main" }}
+            sx={{
+              position: 'relative',
+              fontWeight: 700,
+              color: theme.palette.primary.main,
+              letterSpacing: '0.5px',
+              display: 'inline-block',
+              pb: 1,
+              my: 2,
+              '&::after': {
+                content: '""',
+                position: 'absolute',
+                bottom: 0,
+                left: 0,
+                width: '40%',
+                height: '2px',
+                backgroundColor: theme.palette.primary.main,
+                borderRadius: '2px',
+                transition: 'width 0.3s ease',
+                opacity: 0.7,
+              },
+              '&:hover::after': {
+                width: '100%',
+              }
+            }}
           >
             {title}
           </Typography>
@@ -89,7 +114,7 @@ export const ListView = ({ title, children }) => {
           </Button>
         </Grid>
       </Grid>
-      <Divider sx={{ my: 2 }} />
+      {/* <Divider sx={{ my: 2 }} /> */}
       {childrenWithProps}
     </Box>
   );

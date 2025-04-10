@@ -42,10 +42,10 @@ export const registerValidation = yup.object({
 export const clientValidation = yup.object({
   ci: yup
     .string("Introduzca el carnet de identidad")
-    .matches(/^[0-9A-Za-z-]+$/, "El carnet de identidad no es válido")
+    .matches(/^\d{11}$/, "El carnet de identidad debe contener exactamente 11 dígitos")
     .required("Carnet de identidad requerido"),
 
-  name: yup
+  nombre: yup
     .string("Introduzca el nombre")
     .matches(
       /^[a-zA-ZÁÉÍÓÚáéíóúñÑ\s]+$/,
@@ -53,11 +53,40 @@ export const clientValidation = yup.object({
     )
     .required("Nombre requerido"),
 
-  lastname: yup
+  apellidos: yup
     .string("Introduzca los apellidos")
     .matches(
       /^[a-zA-ZÁÉÍÓÚáéíóúñÑ\s]+$/,
       "Los apellidos solo pueden contener letras"
     )
     .required("Apellidos requeridos"),
+});
+
+export const regularInscriptionValidation = yup.object({
+  cliente: yup.object({
+    ci: yup
+      .string("Introduzca el carnet de identidad")
+      .matches(/^\d{11}$/, "El carnet de identidad debe contener exactamente 11 dígitos")
+      .required("Carnet de identidad requerido"),
+
+    nombre: yup
+      .string("Introduzca el nombre")
+      .matches(
+        /^[a-zA-ZÁÉÍÓÚáéíóúñÑ\s]+$/,
+        "El nombre solo puede contener letras"
+      )
+      .required("Nombre requerido"),
+
+    apellidos: yup
+      .string("Introduzca los apellidos")
+      .matches(
+        /^[a-zA-ZÁÉÍÓÚáéíóúñÑ\s]+$/,
+        "Los apellidos solo pueden contener letras"
+      )
+      .required("Apellidos requeridos"),
+  }),
+  rutasSeleccionadas: yup
+    .array()
+    .min(1, "Debe seleccionar al menos una ruta")
+    .max(3, "No puede seleccionar más de 3 rutas")
 });

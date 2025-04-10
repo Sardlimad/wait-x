@@ -118,6 +118,7 @@ const transportTheme = createTheme({
       fontWeight: 600,
       letterSpacing: "0.02857em",
       textTransform: "none",
+      borderRadius: 50,
     },
     caption: {
       fontSize: "0.75rem",

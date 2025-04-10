@@ -22,6 +22,38 @@ import {
   Delete as DeleteIcon,
   Search as SearchIcon,
 } from '@mui/icons-material';
+import { styled } from '@mui/system';
+
+const StyledTableContainer = styled(TableContainer)(({ theme }) => ({
+  background: theme.palette.mode === 'dark' 
+    ? alpha(theme.palette.background.paper, 0.2)
+    : alpha(theme.palette.background.paper, 0.8),
+  backdropFilter: 'blur(10px)',
+  borderRadius: '8px',
+  border: `1px solid ${alpha(theme.palette.divider, 0.1)}`,
+  boxShadow: theme.palette.mode === 'dark'
+    ? '0 4px 20px rgba(0, 0, 0, 0.2)'
+    : '0 4px 20px rgba(0, 0, 0, 0.05)',
+    overflowY: 'auto',
+    overflowX: 'hidden',
+  // overflow: 'hidden',
+  // maxHeight: 600,
+}));
+
+const StyledTableCell = styled(TableCell)(({ theme }) => ({
+  borderBottom: `1px solid ${alpha(theme.palette.divider, 0.1)}`,
+  padding: '16px',
+  '&.header': {
+    backgroundColor: theme.palette.mode === 'dark'
+      ? alpha(theme.palette.primary.main, 0.2)
+      : alpha(theme.palette.primary.main, 0.1),
+    color: theme.palette.mode === 'dark'
+      ? theme.palette.primary.light
+      : theme.palette.primary.main,
+    fontWeight: 600,
+    fontSize: '0.875rem',
+  }
+}));
 
 const DynamicTable = ({
   data,
@@ -108,56 +140,53 @@ const DynamicTable = ({
   };
 
   return (
-    <Box sx={{ width: '100%' }} {...restProps}>
-      <TableContainer sx={{ maxHeight: 600, border: 'none', boxShadow: 'none' }}>
+    <Box sx={{ width: '100%', p: 0 }} {...restProps}>
+      <StyledTableContainer>
         <Table stickyHeader>
           <TableHead>
             <TableRow>
               {columns.map((column) => (
-                <TableCell 
+                <StyledTableCell 
                   key={column}
-                  sx={{ 
-                    backgroundColor: (theme) => theme.palette.primary.main,
-                    color: '#fff',
-                    fontWeight: 'bold'
-                  }}
+                  className="header"
                 >
                   <TableSortLabel
                     active={orderBy === column}
                     direction={orderBy === column ? order : 'asc'}
                     onClick={() => handleRequestSort(column)}
                     sx={{
-                      color: '#fff !important',
-                      '&.MuiTableSortLabel-active': {
-                        color: '#fff !important',
-                      },
                       '& .MuiTableSortLabel-icon': {
-                        color: '#fff !important',
+                        color: 'inherit !important',
+                        opacity: 0.5
                       }
                     }}
                   >
                     {getColumnName(column)}
                   </TableSortLabel>
-                </TableCell>
+                </StyledTableCell>
               ))}
-              <TableCell 
+              <StyledTableCell 
                 align="center"
-                sx={{ 
-                  backgroundColor: (theme) => theme.palette.primary.main,
-                  color: '#fff',
-                  fontWeight: 'bold'
-                }}
+                className="header"
               >
                 Acciones
-              </TableCell>
+              </StyledTableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {sortedData.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={columns.length + 1} align="center" sx={{ py: 3 }}>
+                <StyledTableCell 
+                  colSpan={columns.length + 1} 
+                  align="center" 
+                  sx={{ 
+                    py: 8,
+                    color: 'text.secondary',
+                    fontSize: '0.875rem'
+                  }}
+                >
                   No hay datos para mostrar
-                </TableCell>
+                </StyledTableCell>
               </TableRow>
             ) : (
               sortedData
@@ -167,57 +196,63 @@ const DynamicTable = ({
                     hover 
                     key={index}
                     sx={{ 
-                      '&:nth-of-type(odd)': {
-                        backgroundColor: (theme) => alpha(theme.palette.primary.main, 0.02),
-                      },
-                      '&:last-of-type td, &:last-of-type th': {
-                        border: 0,
+                      transition: 'all 0.2s ease',
+                      '&:hover': {
+                        backgroundColor: theme => alpha(theme.palette.primary.main, 0.05),
+                        transform: 'scale(1.001)',
                       }
                     }}
                   >
                     {columns.map((column) => (
-                      <TableCell key={column}>
+                      <StyledTableCell key={column}>
                         {row[column]}
-                      </TableCell>
+                      </StyledTableCell>
                     ))}
-                    <TableCell align="center">
-                      <Tooltip title="Editar">
-                        <IconButton
-                          size="small"
-                          onClick={() => onEdit(row)}
-                          sx={{
-                            color: 'grey.500',
-                            transition: 'color 0.2s ease',
-                            '&:hover': {
-                              color: theme => theme.palette.primary.main
-                            }
-                          }}
-                        >
-                          <EditIcon />
-                        </IconButton>
-                      </Tooltip>
-                      <Tooltip title="Eliminar">
-                        <IconButton
-                          size="small"
-                          onClick={() => onDelete(row)}
-                          sx={{
-                            color: 'grey.500',
-                            transition: 'color 0.2s ease',
-                            '&:hover': {
-                              color: theme => theme.palette.error.main
-                            }
-                          }}
-                        >
-                          <DeleteIcon />
-                        </IconButton>
-                      </Tooltip>
-                    </TableCell>
+                    <StyledTableCell align="center">
+                      <Box sx={{ 
+                        display: 'flex', 
+                        gap: 1, 
+                        justifyContent: 'center',
+                        opacity: 0.7,
+                        transition: 'opacity 0.2s ease',
+                        '&:hover': { opacity: 1 }
+                      }}>
+                        <Tooltip title="Editar" arrow>
+                          <IconButton
+                            size="small"
+                            onClick={() => onEdit(row)}
+                            sx={{
+                              backgroundColor: theme => alpha(theme.palette.primary.main, 0.1),
+                              '&:hover': {
+                                backgroundColor: theme => alpha(theme.palette.primary.main, 0.2),
+                              }
+                            }}
+                          >
+                            <EditIcon fontSize="small" color="primary" />
+                          </IconButton>
+                        </Tooltip>
+                        <Tooltip title="Eliminar" arrow>
+                          <IconButton
+                            size="small"
+                            onClick={() => onDelete(row)}
+                            sx={{
+                              backgroundColor: theme => alpha(theme.palette.error.main, 0.1),
+                              '&:hover': {
+                                backgroundColor: theme => alpha(theme.palette.error.main, 0.2),
+                              }
+                            }}
+                          >
+                            <DeleteIcon fontSize="small" color="error" />
+                          </IconButton>
+                        </Tooltip>
+                      </Box>
+                    </StyledTableCell>
                   </TableRow>
                 ))
             )}
           </TableBody>
         </Table>
-      </TableContainer>
+      </StyledTableContainer>
 
       <TablePagination
         rowsPerPageOptions={[5, 10, 25]}
@@ -229,12 +264,17 @@ const DynamicTable = ({
         onRowsPerPageChange={handleChangeRowsPerPage}
         labelRowsPerPage="Filas por página:"
         sx={{ 
-          borderTop: '1px solid #e0e0e0',
-          backgroundColor: (theme) => alpha(theme.palette.primary.main, 0.03)
+          mt: 2,
+          borderRadius: '12px',
+          backgroundColor: theme => alpha(theme.palette.primary.main, 0.03),
+          '& .MuiToolbar-root': {
+            borderRadius: '12px',
+            padding: '8px 16px',
+          }
         }}
       />
     </Box>
   );
 };
 
-export default DynamicTable; 
+export default DynamicTable;

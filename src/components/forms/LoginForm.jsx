@@ -72,7 +72,7 @@ export default function LoginForm() {
             </Alert>
           )}
 
-          <Box component="form" onSubmit={handleSubmit} sx={{ width: "100%" }}>
+          <Box component="form" onSubmit={handleSubmit} sx={{ width: "100%" }} noValidate>
             <TextField
               margin="normal"
               required
@@ -136,7 +136,7 @@ export default function LoginForm() {
             <Box sx={{ textAlign: "center" }}>
               <Link
                 component="button"
-                variant="body2"
+                variant="body"
                 onClick={() => router.push("/auth/forgot-password")}
                 sx={{
                   color: "text.secondary",
