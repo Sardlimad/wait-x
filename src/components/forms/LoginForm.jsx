@@ -133,7 +133,7 @@ export default function LoginForm() {
             >
               {isLoading ? "Iniciando sesión..." : "Iniciar Sesión"}
             </Button>
-            <Box sx={{ textAlign: "center" }}>
+            {/* <Box sx={{ textAlign: "center" }}>
               <Link
                 component="button"
                 variant="body"
@@ -148,21 +148,6 @@ export default function LoginForm() {
               >
                 ¿Olvidaste tu contraseña?
               </Link>
-            </Box>
-            {/* <Box
-              component="a"
-              href="/auth/forgot-password"
-              sx={{
-                textAlign: "center",
-                display: "block",
-                color: "primary.main",
-                textDecoration: "none",
-                "&:hover": {
-                  textDecoration: "underline",
-                },
-              }}
-            >
-              ¿Olvidaste tu contraseña?
             </Box> */}
           </Box>
         </Paper>
