@@ -140,3 +140,146 @@ export const InscripcionesPriorizadas = [
         "causa": "Recluso",
     }
 ]
+
+export const Fallos = [
+    {
+        "id": "1",
+        "ruta": "La Habana - Santiago de Cuba",
+        "cantidad": 5,
+    },
+    {
+        "id": "2",
+        "ruta": "La Habana - Holguín",
+        "cantidad": 3,
+    },
+    {
+        "id": "3",
+        "ruta": "La Habana - Camagüey",
+        "cantidad": 4,
+    }
+]
+
+export const RutasFallo = [
+    {
+        "id": "1",
+        "codigo": "HAB-SCU",
+        "origen": "La Habana",
+        "destino": "Santiago de Cuba",
+        "capacidad": 10
+    },
+    {
+        "id": "2",
+        "codigo": "HAB-HOL",
+        "origen": "La Habana",
+        "destino": "Holguín",
+        "capacidad": 5
+    },
+    {
+        "id": "3",
+        "codigo": "HAB-CAM",
+        "origen": "La Habana",
+        "destino": "Camagüey",
+        "capacidad": 6
+    }
+];
+
+export const clientesData = [
+    // Non-prioritized clients first
+    {
+        id: 2,
+        ci: "87654321",
+        nombre: "Ana",
+        apellidos: "Gómez", 
+        numeroEnCola: 6,
+        priorizado: false,
+    },
+    {
+        id: 4,
+        ci: "34567890",
+        nombre: "María",
+        apellidos: "López",
+        numeroEnCola: 5,
+        priorizado: false,
+    },
+    {
+        id: 6,
+        ci: "56789012",
+        nombre: "Laura",
+        apellidos: "García",
+        numeroEnCola: 4,
+        priorizado: false,
+    },
+    {
+        id: 8,
+        ci: "78901234",
+        nombre: "Carmen",
+        apellidos: "Sánchez",
+        numeroEnCola: 3,
+        priorizado: false,
+    },
+    {
+        id: 10,
+        ci: "90123456",
+        nombre: "Elena",
+        apellidos: "Torres",
+        numeroEnCola: 2,
+        priorizado: false,
+    },
+    {
+        id: 12,
+        ci: "12340987",
+        nombre: "Sofia",
+        apellidos: "Castro",
+        numeroEnCola: 1,
+        priorizado: false,
+    },
+    // Prioritized clients at the end
+    {
+        id: 1,
+        ci: "12345678",
+        nombre: "Juan",
+        apellidos: "Pérez",
+        numeroEnCola: 6,
+        priorizado: true,
+    },
+    {
+        id: 3,
+        ci: "23456789",
+        nombre: "Carlos",
+        apellidos: "Rodríguez",
+        numeroEnCola: 5,
+        priorizado: true,
+    },
+    {
+        id: 5,
+        ci: "45678901",
+        nombre: "Pedro",
+        apellidos: "Martínez",
+        numeroEnCola: 4,
+        priorizado: true,
+    },
+    {
+        id: 7,
+        ci: "67890123",
+        nombre: "Miguel",
+        apellidos: "Fernández",
+        numeroEnCola: 3,
+        priorizado: true,
+    },
+    {
+        id: 9,
+        ci: "89012345",
+        nombre: "Roberto",
+        apellidos: "Díaz",
+        numeroEnCola: 2,
+        priorizado: true,
+    },
+    {
+        id: 11,
+        ci: "01234567",
+        nombre: "Luis",
+        apellidos: "Ramírez",
+        numeroEnCola: 1,
+        priorizado: true,
+    }
+];

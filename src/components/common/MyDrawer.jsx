@@ -21,8 +21,8 @@ import { useRouter } from "next/navigation";
 import { useLoading } from '../../context/LoadingContext';
 
 //material icons
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import HomeIcon from "@mui/icons-material/Home";
+import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
 import PeopleIcon from "@mui/icons-material/People";
 import RouteIcon from "@mui/icons-material/Route";
 import FactCheckIcon from "@mui/icons-material/FactCheck";
@@ -34,7 +34,7 @@ import AssignmentLateIcon from '@mui/icons-material/AssignmentLate';
 import AssignmentIndIcon from '@mui/icons-material/AssignmentInd';
 
 import { alpha, styled } from '@mui/material/styles';
-import { APP_NAME } from "../../settings/settings";
+import { APP_NAME } from "../../config/settings";
 
 // Añade estos imports al inicio del archivo
 import LightModeIcon from '@mui/icons-material/LightMode';
@@ -98,7 +98,7 @@ export const MyDrawer = ({ open, toggleDrawer }) => {
       key: 0,
       name: "Inicio",
       route: "/",
-      icon: <HomeIcon sx={{ color: theme.palette.primary.main }} />,
+      icon: <HomeRoundedIcon sx={{ color: theme.palette.primary.main }} />,
     },
     {
       key: 2,
@@ -136,12 +136,12 @@ export const MyDrawer = ({ open, toggleDrawer }) => {
     //   route: "/localidades",
     //   icon: <PlaceIcon sx={{ color: theme.palette.primary.main }} />,
     // },
-    // {
-    //   key: 5,
-    //   name: "Fallos",
-    //   route: "/fallos",
-    //   icon: <AssignmentLateIcon sx={{ color: theme.palette.primary.main }} />,
-    // },
+    {
+      key: 5,
+      name: "Fallos",
+      route: "/fallos",
+      icon: <AssignmentLateIcon sx={{ color: theme.palette.primary.main }} />,
+    },
     {
       key: 6,
       name: "Usuarios",

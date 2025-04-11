@@ -3,10 +3,10 @@ import React, { useState } from "react";
 import { Box, Typography, Button, Stack } from "@mui/material";
 import { ArrowBack } from "@mui/icons-material";
 import { useRouter } from "next/navigation";
-import ClienteForm from "../../../components/forms/ClienteForm";
+import UsuarioForm from "../../../components/forms/UsuarioForm";
 import { SystemAlert } from "../../../components/common/SystemAlert";
 
-export default function ClientesPage() {
+export default function UsuariosPage() {
   const router = useRouter();
   const [alert, setAlert] = useState({
     open: false,
@@ -19,39 +19,30 @@ export default function ClientesPage() {
   };
 
   const handleSubmit = async (formData) => {
-    try {I
-      const response = await fetch("/api/clientes", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
-      });
-
-      if (!response.ok) {
-        throw new Error("Error al crear el cliente");
-      }
-
+    try {
+      // Aquí irá la lógica de la API posteriormente
       setAlert({
         open: true,
         status: "success",
-        message: "Cliente registrado exitosamente",
+        message: "Usuario registrado exitosamente",
       });
 
-      // Redirigir a la lista de clientes después de un breve delay
+      // Redirigir a la lista de usuarios después de un breve delay
       setTimeout(() => {
-        router.push("/clientes");
+        router.push("/usuarios");
       }, 1500);
     } catch (error) {
       setAlert({
         open: true,
         status: "error",
-        message: error.message || "Error al crear el cliente",
+        message: error.message || "Error al crear el usuario",
       });
     }
   };
 
   return (
     <Box sx={{ p: 3 }}>
-      <ClienteForm onSubmit={handleSubmit} />
+      <UsuarioForm onSubmit={handleSubmit} />
       <SystemAlert
         open={alert.open}
         status={alert.status}

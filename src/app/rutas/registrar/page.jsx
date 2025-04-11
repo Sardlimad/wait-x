@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { Box, Typography } from '@mui/material';
 import RutaForm from '../../../components/forms/RutaForm';
-import { API_URL } from '../../../settings/settings';
+import { API_URL } from '../../../config/settings';
 
 export default function RutasPage() {
   const [localidades, setLocalidades] = useState([]);

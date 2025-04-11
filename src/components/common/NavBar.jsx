@@ -8,7 +8,7 @@ import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 // import LogoutBtn from './LogoutBtn';
 // import { useAuth } from '../helpers/AuthProvider';
-import { APP_NAME } from '../../settings/settings';
+import { APP_NAME } from '../../config/settings';
 import { MyDrawer } from './MyDrawer';
 import AccountMenu from './AccountMenu';
 

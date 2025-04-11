@@ -5,9 +5,9 @@ import { usePathname, useRouter } from "next/navigation";
 import { useAuth } from "../hooks/useAuth";
 import "./globals.css";
 import CssBaseline from "@mui/material/CssBaseline";
-import NavBar from "../components/custom/NavBar";
-import { ThemeProvider } from '../context/ThemeContext';
-import { LoadingProvider } from '../context/LoadingContext'; // Mover LoadingProvider a un archivo separado
+import NavBar from "../components/common/NavBar";
+import { ThemeProvider } from "../context/ThemeContext";
+import { LoadingProvider } from "../context/LoadingContext"; // Mover LoadingProvider a un archivo separado
 
 export default function RootLayout({ children }) {
   const pathname = usePathname();
@@ -17,13 +17,13 @@ export default function RootLayout({ children }) {
   // Manejar la autenticación
   React.useEffect(() => {
     if (!authLoading) {
-      const isAuthPath = pathname.startsWith('/auth');
-      const isPublicPath = pathname === '/' || pathname === '/dashboard';
+      const isAuthPath = pathname.startsWith("/auth");
+      const isPublicPath = pathname === "/" || pathname === "/dashboard";
 
       if (!isAuthenticated && !isAuthPath && !isPublicPath) {
-        router.push('/auth/login');
+        router.push("/auth/login");
       } else if (isAuthenticated && isAuthPath) {
-        router.push('/dashboard');
+        router.push("/dashboard");
       }
     }
   }, [isAuthenticated, authLoading, pathname, router]);
@@ -36,11 +36,11 @@ export default function RootLayout({ children }) {
           <ThemeProvider>
             <Box
               sx={{
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-                height: '100vh',
-                width: '100vw',
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                height: "100vh",
+                width: "100vw",
               }}
             >
               <CircularProgress />
@@ -54,10 +54,10 @@ export default function RootLayout({ children }) {
   // Si estamos en una ruta de autenticación
   if (pathname.includes("/auth")) {
     return (
-          <ThemeProvider>
-            <CssBaseline />
-            {children}
-          </ThemeProvider>
+      <ThemeProvider>
+        <CssBaseline />
+        {children}
+      </ThemeProvider>
     );
   }
 
@@ -68,29 +68,9 @@ export default function RootLayout({ children }) {
         <ThemeProvider>
           <CssBaseline />
           <LoadingProvider>
-            <Box 
-              // sx={{ 
-              //   display: 'flex', 
-              //   flexDirection: 'column',
-              //   minHeight: '100vh',
-              //   margin: 0,
-              //   padding: 0,
-              //   overflow: 'hidden'
-              // }}
-            >
+            <Box>
               <NavBar />
-              <Box 
-                component="main" 
-                // sx={{ 
-                //    flexGrow: 1,
-                //   marginTop: '64px', // altura del NavBar
-                //   padding: 0,
-                //   overflow: 'auto',
-                //   height: 'calc(100vh - 64px)'
-                // }}
-              >
-                {children}
-              </Box>
+              <Box component="main">{children}</Box>
             </Box>
           </LoadingProvider>
         </ThemeProvider>

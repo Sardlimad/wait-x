@@ -90,3 +90,16 @@ export const regularInscriptionValidation = yup.object({
     .min(1, "Debe seleccionar al menos una ruta")
     .max(3, "No puede seleccionar más de 3 rutas")
 });
+
+export const userValidation = yup.object({
+  usuario: yup.string().required("El usuario es requerido"),
+  contraseña: yup.string()
+    .min(8, "La contraseña debe tener al menos 8 caracteres")
+    .required("La contraseña es requerida"),
+  correo: yup.string()
+    .email("Correo electrónico inválido")
+    .required("El correo es requerido"),
+  nombre: yup.string().required("El nombre es requerido"),
+  apellidos: yup.string().required("Los apellidos son requeridos"),
+  rol: yup.string().required("El rol es requerido"),
+});

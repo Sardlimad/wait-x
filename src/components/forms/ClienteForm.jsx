@@ -24,7 +24,6 @@ const ClienteForm = ({ onSubmit, initialData = null, isEditing = false }) => {
   const router = useRouter();
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const { loading: loadingGlobal, setLoading: setLoadingGlobal } = useLoading();
   const [openModal, setOpenModal] = useState(false);
 
   const formik = useFormik({
@@ -72,7 +71,7 @@ const ClienteForm = ({ onSubmit, initialData = null, isEditing = false }) => {
           {/* Header */}
           <Grid item xs={12}>
             <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", mb: 2 }}>
-              <Typography variant="h5" component="h1" sx={{ fontWeight: "bold", color: "primary.main" }}>
+              <Typography variant="h5" component="h1" sx={{ fontWeight: "bold" }}>
                 {isEditing ? "Editar Cliente" : "Registro de Cliente"}
               </Typography>
               <Box>

@@ -4,7 +4,7 @@ import { Box, Container, Typography } from "@mui/material";
 import { ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import businessTheme from "../../themes/bussiness_theme";
-import { APP_NAME } from "../../settings/settings";
+import { APP_NAME } from "../../config/settings";
 
 const inter = Inter({ subsets: ["latin"] });
 

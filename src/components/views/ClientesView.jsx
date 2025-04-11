@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import { Typography, Button, CircularProgress } from "@mui/material";
 import DynamicTable from "../common/DynamicTable";
 import ListView from "../ListView";
-import { API_URL } from "../../settings/settings";
+import { API_URL } from "../../config/settings";
 import { useAuth } from "../../hooks/useAuth";
 
 const ClientesView = () => {
@@ -67,7 +67,7 @@ const ClientesView = () => {
           onEdit={handleEdit}
           onDelete={handleDelete}
           searchFields={searchFields}
-          excludeFields={["id"]} // Excluir el ID de MongoDB
+          excludeFields={["id"]} // Excluir el ID
         />
       )}
     </ListView>

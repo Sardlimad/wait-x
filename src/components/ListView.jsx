@@ -14,7 +14,7 @@ import KeyboardReturnIcon from "@mui/icons-material/KeyboardReturn";
 import SearchIcon from "@mui/icons-material/Search";
 import Link from "next/link";
 
-export const ListView = ({ title, children }) => {
+export const ListView = ({ title, showRegistrarBtn = true, children }) => {
   const pathname = usePathname();
   const router = useRouter();
   const [searchTerm, setSearchTerm] = useState("");
@@ -36,7 +36,7 @@ export const ListView = ({ title, children }) => {
         </Grid>
         <Grid item xs />
         <Grid item>
-          <Box sx={{ display: 'flex', gap: 2 }}>
+          <Box sx={{ display: "flex", gap: 2 }}>
             <TextField
               size="small"
               placeholder="Buscar..."
@@ -50,11 +50,17 @@ export const ListView = ({ title, children }) => {
                 ),
               }}
             />
-            <Link href={`${pathname}/registrar`} style={{ textDecoration: 'none' }}>
-              <Button variant="contained" startIcon={<AddIcon />}>
-                Registrar
-              </Button>
-            </Link>
+            {showRegistrarBtn && (
+              <Link href={`${pathname}/registrar`}>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  startIcon={<AddIcon />}
+                >
+                  Registrar
+                </Button>
+              </Link>
+            )}
             <Button
               variant="outlined"
               color="secondary"
