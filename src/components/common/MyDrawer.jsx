@@ -43,6 +43,7 @@ import { IconButton, Tooltip } from '@mui/material';
 
 // Añade este import
 import { useTheme as useCustomTheme } from '../../context/ThemeContext';
+import { AppLogo } from "./AppLogo";
 
 // Actualiza el StyledDrawer
 const StyledDrawer = styled(Drawer)(({ theme }) => ({
@@ -175,17 +176,7 @@ export const MyDrawer = ({ open, toggleDrawer }) => {
           alignItems: 'center',
           position: 'relative'
         }}>
-          <Box
-            component="img"
-            src="/app_logo_black.png"
-            alt="App Logo"
-            sx={{
-              width: 60,
-              height: 60,
-              my: 2,
-              filter: theme.palette.mode === 'dark' ? 'invert(1)' : 'none'
-            }}
-          />
+          <AppLogo />
           <Typography
             variant="h5"
             sx={{

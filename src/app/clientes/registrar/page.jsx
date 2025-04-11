@@ -37,9 +37,9 @@ export default function ClientesPage() {
       });
 
       // Redirigir a la lista de clientes después de un breve delay
-      setTimeout(() => {
+      // setTimeout(() => {
         router.push("/clientes");
-      }, 1500);
+      // }, 1500);
     } catch (error) {
       setAlert({
         open: true,

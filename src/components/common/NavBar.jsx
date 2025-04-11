@@ -15,6 +15,7 @@ import AccountMenu from './AccountMenu';
 import { styled, useTheme as useMuiTheme } from '@mui/material/styles';
 import { alpha } from '@mui/material/styles';
 import { useTheme } from '../../context/ThemeContext'; // Cambia esta importación
+import { AppLogo } from './AppLogo';
 
 // Estilizar el AppBar
 const StyledAppBar = styled(AppBar)(({ theme }) => ({
@@ -64,6 +65,7 @@ export default function NavBar() {
                         >
                             <MenuIcon />
                         </MenuButton>
+                        <AppLogo size={30}/> 
                         <Typography 
                             variant="h6" 
                             sx={{ 

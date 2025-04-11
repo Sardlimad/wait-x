@@ -5,6 +5,7 @@ import { ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import businessTheme from "../../themes/bussiness_theme";
 import { APP_NAME } from "../../config/settings";
+import { AppLogo } from "../../components/common/AppLogo";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -38,6 +39,7 @@ export default function AuthLayout({ children }) {
                   mt: 10
                 }}
               >
+                <AppLogo size={60} />
                 <Typography
                   component="h1"
                   variant="h4"

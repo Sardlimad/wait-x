@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   TextField,
   Button,
@@ -39,6 +39,7 @@ import {
   DialogContent,
   DialogActions,
 } from "@mui/material";
+import { localidadesData } from "../../test/DatosPrueba";
 
 const diasSemana = [
   "Lunes",
@@ -52,15 +53,15 @@ const diasSemana = [
 
 const RutaForm = ({
   onSubmit,
-  localidades,
   initialData = null,
   isEditing = false,
 }) => {
   const router = useRouter();
+  const [localidades, setLocalidades] = useState([]); // Aquí deberías cargar las localidades desde tu API o contexto
   const [formData, setFormData] = useState({
     codigo: "",
-    origen: null,
-    destino: null,
+    origen: null,  // Ahora almacenará el objeto completo
+    destino: null  // Ahora almacenará el objeto completo
   });
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -81,6 +82,10 @@ const RutaForm = ({
       }
     }
   }, [initialData]);
+
+  useEffect(() => {
+    setLocalidades(localidadesData);
+  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -196,7 +201,8 @@ const RutaForm = ({
                   loading ||
                   !formData.codigo ||
                   !formData.origen ||
-                  !formData.destino
+                  !formData.destino||
+                  salidas.length === 0
                 }
                 sx={{ mr: 1 }}
               >
@@ -242,7 +248,13 @@ const RutaForm = ({
               getOptionLabel={(option) => option.nombre || ""}
               value={formData.origen}
               onChange={(_, newValue) =>
-                setFormData((prev) => ({ ...prev, origen: newValue?.id }))
+                setFormData((prev) => ({
+                  ...prev,
+                  origen: newValue  // Guarda el objeto completo
+                }))
+              }
+              isOptionEqualToValue={(option, value) => 
+                option.id === value?.id
               }
               renderInput={(params) => (
                 <TextField
@@ -260,7 +272,13 @@ const RutaForm = ({
               getOptionLabel={(option) => option.nombre || ""}
               value={formData.destino}
               onChange={(_, newValue) =>
-                setFormData((prev) => ({ ...prev, destino: newValue?.id }))
+                setFormData((prev) => ({
+                  ...prev,
+                  destino: newValue  // Guarda el objeto completo
+                }))
+              }
+              isOptionEqualToValue={(option, value) => 
+                option.id === value?.id
               }
               renderInput={(params) => (
                 <TextField

@@ -1,11 +1,12 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { Typography, Button, CircularProgress } from "@mui/material";
+import { Typography, Button, CircularProgress, Alert } from "@mui/material";
 import DynamicTable from "../common/DynamicTable";
 import ListView from "../ListView";
 import { API_URL } from "../../config/settings";
 import { useAuth } from "../../hooks/useAuth";
+import { LoadingSpinner } from "../common/LoadingSpinner";
 
 const ClientesView = () => {
   const [clientes, setClientes] = useState([]);
@@ -54,13 +55,11 @@ const ClientesView = () => {
   return (
     <ListView title="Lista de Clientes">
       {loading ? (
-        <div style={{ display: 'flex', justifyContent: 'center', padding: '20px' }}>
-          <CircularProgress />
-        </div>
+        <LoadingSpinner />
       ) : error ? (
-        <Typography color="error" style={{ padding: '20px' }}>
+        <Alert severity="error" sx={{ mt: 2 }}>
           {error}
-        </Typography>
+        </Alert>
       ) : (
         <DynamicTable
           data={clientes}

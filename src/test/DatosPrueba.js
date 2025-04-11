@@ -283,3 +283,12 @@ export const clientesData = [
         priorizado: true,
     }
 ];
+
+export const localidadesData = [
+    { id: 1, nombre: "La Habana" },
+    { id: 2, nombre: "Santiago de Cuba" },
+    { id: 3, nombre: "Holguín" },
+    { id: 4, nombre: "Camagüey" },
+    { id: 5, nombre: "Cienfuegos" },
+    { id: 6, nombre: "Matanzas" }
+];

@@ -28,9 +28,9 @@ export default function UsuariosPage() {
       });
 
       // Redirigir a la lista de usuarios después de un breve delay
-      setTimeout(() => {
+      // setTimeout(() => {
         router.push("/usuarios");
-      }, 1500);
+      // }, 1500);
     } catch (error) {
       setAlert({
         open: true,
