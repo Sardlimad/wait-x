@@ -17,8 +17,6 @@ export default function AuthLayout({ children }) {
   return (
     <html lang="es">
       <body className={inter.className}>
-        <ThemeProvider theme={businessTheme}>
-          <CssBaseline />
           <Box
             sx={{
               // minHeight: '100vh',
@@ -63,7 +61,6 @@ export default function AuthLayout({ children }) {
               {children}
             </Container>
           </Box>
-        </ThemeProvider>
       </body>
     </html>
   );
