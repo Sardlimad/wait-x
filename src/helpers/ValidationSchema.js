@@ -92,7 +92,9 @@ export const regularInscriptionValidation = yup.object({
 });
 
 export const userValidation = yup.object({
-  usuario: yup.string().required("El usuario es requerido"),
+  usuario: yup.string()
+    .required("El usuario es requerido")
+    .matches(/^\S*$/, "El usuario no debe contener espacios"),
   contraseña: yup.string()
     .min(8, "La contraseña debe tener al menos 8 caracteres")
     .required("La contraseña es requerida"),
