@@ -16,8 +16,10 @@ import CancelIcon from "@mui/icons-material/Cancel";
 import { clientesData } from "../../test/DatosPrueba";
 import KeyboardReturnIcon from "@mui/icons-material/KeyboardReturn";
 import { get } from "http";
+import { useRouter } from "next/navigation";
 
 const FalloForm = ({ ruta }) => {
+  const router = useRouter();
   // Estados para manejar los datos
   const [clientes, setClientes] = useState([]);
   const [clienteActual, setClienteActual] = useState(null);
