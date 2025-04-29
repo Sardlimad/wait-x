@@ -1,18 +1,15 @@
-"use client";
+// "use client";
 import { Inter } from "next/font/google";
 import { Box, Container, Typography } from "@mui/material";
-import { ThemeProvider } from "@mui/material/styles";
-import CssBaseline from "@mui/material/CssBaseline";
-import businessTheme from "../../themes/bussiness_theme";
 import { APP_NAME } from "../../config/settings";
 import { AppLogo } from "../../components/common/AppLogo";
 
 const inter = Inter({ subsets: ["latin"] });
 
-// export const metadata = {
-//   title: 'Autenticación - WaitX',
-//   description: 'Página de autenticación para WaitX',
-// };
+export const metadata = {
+  title: `Autenticación - ${APP_NAME.SHORT}`,
+  description: `Página de autenticación para  - ${APP_NAME.SHORT}`,
+};
 
 export default function AuthLayout({ children }) {
   return (
